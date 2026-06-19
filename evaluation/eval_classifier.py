@@ -10,7 +10,7 @@ from sklearn.metrics import classification_report, confusion_matrix
 
 def main(n=2000):
     clf = pipeline("text-classification", model="models/abuse_clf")
-    ds = load_dataset("google/jigsaw_toxicity_pred")["test"]
+    ds = load_dataset("google/jigsaw_toxicity_pred", trust_remote_code=True)["test"]
     ds = ds.shuffle(seed=0).select(range(min(n, len(ds))))
 
     def gold(ex):

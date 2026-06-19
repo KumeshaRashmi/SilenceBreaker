@@ -105,7 +105,9 @@ def run(text: str) -> dict:
 
 
 if __name__ == "__main__":
-    import json
-    out = run("My manager keeps sending inappropriate messages and threatens "
-              "my job if I report it.")
-    print(json.dumps(out, indent=2))
+    import json, sys
+    text = sys.argv[1] if len(sys.argv) > 1 else (
+        "My manager keeps sending inappropriate messages and threatens "
+        "my job if I report it.")
+    out = run(text)
+    print(json.dumps(out))

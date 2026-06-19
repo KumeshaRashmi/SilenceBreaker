@@ -14,7 +14,40 @@ If you are having thoughts of harming yourself, please reach out to a crisis lin
 
 After the immediate danger has passed, a recognised support organisation can help with next steps such as safety planning and ongoing support.
 
-> ACTION FOR THE TEAM: Insert your country's emergency number and verified crisis
-> helpline details here and cite the official source.
+## Emergency & Crisis Contacts
+
+**International / Global**
+- Emergency services: dial your local emergency number (e.g. 999 UK, 911 US/Canada, 112 EU, 000 Australia)
+- International Association for Suicide Prevention directory: https://www.iasp.info/resources/Crisis_Centres/
+
+**United Kingdom**
+- Emergency: 999
+- National Domestic Abuse Helpline (Refuge): 0808 2000 247 (free, 24/7) — https://www.nationaldahelpline.org.uk
+- Men's Advice Line: 0808 8010 327 — https://mensadviceline.org.uk
+- Samaritans (crisis/mental health): 116 123 (free, 24/7) — https://www.samaritans.org
+
+**United States**
+- Emergency: 911
+- National Domestic Violence Hotline: 1-800-799-7233 (TTY: 1-800-787-3224), text START to 88788 — https://www.thehotline.org
+- Crisis Text Line: text HOME to 741741 — https://www.crisistextline.org
+- National Sexual Assault Hotline (RAINN): 1-800-656-4673 — https://www.rainn.org
+
+**Canada**
+- Emergency: 911
+- ShelterSafe shelter finder: https://www.sheltersafe.ca
+- Kids Help Phone: 1-800-668-6868 — https://kidshelpphone.ca
+
+**Australia**
+- Emergency: 000
+- 1800RESPECT (domestic/family violence): 1800 737 732 (24/7) — https://www.1800respect.org.au
+- Lifeline (crisis support): 13 11 14 — https://www.lifeline.org.au
+
+**Sri Lanka**
+- Emergency Police: 119
+- Women In Need (WIN): +94 11 2694893 — https://www.winsl.net
+- Mithuru Mithuro helpline (women/children): 1938 (free, 24/7)
+- National Child Protection Authority: 1929
+
+Sources: Refuge UK (refuge.org.uk), National Domestic Violence Hotline US (thehotline.org), 1800RESPECT AU (1800respect.org.au), Women In Need Sri Lanka (winsl.net). Verified June 2025.
 
 This is general information only. In an emergency, always contact your local emergency services first.

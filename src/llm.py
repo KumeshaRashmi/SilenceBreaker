@@ -8,6 +8,7 @@ If no API key is set (config.OFFLINE), both degrade to deterministic, rule-based
 behaviour so the full pipeline still runs and is reproducible for grading.
 """
 import re
+import time
 from src import config
 
 # ---------------------------------------------------------------------------
@@ -24,16 +25,26 @@ if not config.OFFLINE:
 
 
 def chat(system: str, user: str, temperature: float = 0.2) -> str:
-    """Single chat completion. Falls back to a template in offline mode."""
+    """Single chat completion with retry on rate limit. Falls back offline."""
     if config.OFFLINE or _client is None:
         return _offline_chat(system, user)
-    resp = _client.chat.completions.create(
-        model=config.LLM_MODEL,
-        temperature=temperature,
-        messages=[{"role": "system", "content": system},
-                  {"role": "user", "content": user}],
-    )
-    return resp.choices[0].message.content.strip()
+    for attempt in range(5):
+        try:
+            resp = _client.chat.completions.create(
+                model=config.LLM_MODEL,
+                temperature=temperature,
+                messages=[{"role": "system", "content": system},
+                          {"role": "user", "content": user}],
+            )
+            return resp.choices[0].message.content.strip()
+        except Exception as exc:
+            if "rate_limit" in str(exc).lower() or "429" in str(exc):
+                wait = 2 ** attempt
+                print(f"[llm] Rate limit hit, retrying in {wait}s...")
+                time.sleep(wait)
+            else:
+                raise
+    return _offline_chat(system, user)
 
 
 # ---------------------------------------------------------------------------

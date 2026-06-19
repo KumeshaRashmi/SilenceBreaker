@@ -13,13 +13,13 @@ from src import config
 class Retriever:
     def __init__(self):
         import faiss
-        from sentence_transformers import SentenceTransformer
+        from src.embedder import MiniLMEmbedder
         index_path = os.path.join(config.INDEX_DIR, "kb.index")
         store_path = os.path.join(config.INDEX_DIR, "store.pkl")
         if not (os.path.exists(index_path) and os.path.exists(store_path)):
             raise FileNotFoundError(
                 "FAISS index not found. Run:  python -m src.rag.build_index")
-        self.model = SentenceTransformer(config.EMB_MODEL)
+        self.model = MiniLMEmbedder(config.EMB_MODEL)
         self.index = faiss.read_index(index_path)
         with open(store_path, "rb") as f:
             store = pickle.load(f)
