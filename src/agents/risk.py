@@ -24,8 +24,8 @@ def evaluate(text: str, distress: str, is_abuse) -> dict:
         score = max(score, 1)
     if HIGH_RISK.search(text):
         score = 2
-    if is_abuse is False:           # classifier says clearly non-abusive
-        score = min(score, 1)
+    # Note: abuse classifier trained on hate-speech data; do NOT let it
+    # override explicit danger cues — only use it as a soft downgrade on low scores.
 
     level = ["low", "medium", "high"][score]
     return {
