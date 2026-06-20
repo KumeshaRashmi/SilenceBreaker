@@ -138,13 +138,13 @@ for entry in reversed(st.session_state.history):
         c4.metric("Emotion", r.get("emotion", "—").title())
 
     if r.get("is_abuse") is not None:
-        label = "Flagged" if r["is_abuse"] else "Not flagged"
+        label = "Abusive" if r["is_abuse"] else "Non-abusive"
         conf = r.get("abuse_conf")
-        c5.metric("Toxicity (exp.)", label,
+        c5.metric("Abuse classifier", label,
                   delta=f"{conf:.0%} conf" if conf else None,
                   delta_color="off")
     else:
-        c5.metric("Toxicity (exp.)", "N/A")
+        c5.metric("Abuse classifier", "Not trained")
 
     st.markdown(f"**Your message:** *{entry['text']}*")
     st.subheader("Guidance")

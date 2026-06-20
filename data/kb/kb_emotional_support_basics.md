@@ -14,7 +14,7 @@ If you are struggling with your mental health, or having thoughts of harming you
 
 Talking to a trained support worker or counsellor can help you process what is happening and think through your options at your own pace.
 
-> ACTION FOR THE TEAM: Insert verified mental-health and crisis support contacts
-> for your region and cite the official source.
+For Sri Lanka, Sumithrayo offers confidential emotional support: +94 11 2696666 (https://www.sumithrayo.org).
+CCC Line (National Mental Health Helpline): 1333.
 
 This document offers general wellbeing information only and is not a substitute for professional care. In an emergency, contact local emergency services.
