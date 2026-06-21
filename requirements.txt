@@ -1,0 +1,15 @@
+torch
+transformers
+datasets
+sentence-transformers
+faiss-cpu
+scikit-learn
+pandas
+numpy
+langchain
+langgraph
+langchain-community
+streamlit
+python-dotenv
+openai
+matplotlib
