@@ -1,0 +1,32 @@
+scenario,input,expected_category,expected_risk,A_baseline,B_rag,C_response,C_category,C_risk
+1,My partner won't let me leave the house or see my friends anymore.,coercive_control,medium,"I'm so sorry to hear that you're going through this. It sounds like you may be experiencing some form of emotional or psychological manipulation, whic","I'm really glad you reached out. What you're describing sounds difficult, and you deserve support.
+
+**What this looks like**
+Based on the information ","If you are in immediate danger, please contact your local emergency number or a crisis helpline right now.
+
+I'm really glad you reached out. What you'",coercive_control,high
+2,My manager keeps sending inappropriate messages and threatens my job if I report,workplace_harassment,medium,I'm so sorry to hear that you're going through this. It's completely unacceptable for your manager to be sending you inappropriate messages and threat,"I'm really glad you reached out. What you're describing sounds difficult, and you deserve support.
+
+**What this looks like**
+Based on the information ","If you are in immediate danger, please contact your local emergency number or a crisis helpline right now.
+
+I'm really glad you reached out. What you'",workplace_harassment,high
+3,He shoved me again last night and I'm scared to go home tonight.,domestic_abuse,high,I'm so sorry to hear that you're going through this. It sounds like you're in a very difficult and potentially dangerous situation. I want you to know,"I'm really glad you reached out. What you're describing sounds difficult, and you deserve support.
+
+**What this looks like**
+Based on the information ","If you are in immediate danger, please contact your local emergency number or a crisis helpline right now.
+
+I'm really glad you reached out. What you'",domestic_abuse,high
+4,HR ignored my complaint and now I'm getting fewer shifts than everyone else.,workplace_harassment,low,"I'm so sorry to hear that you're going through this. Being ignored by HR can be frustrating and demotivating, especially when it affects your work sch","I'm really glad you reached out. What you're describing sounds difficult, and you deserve support.
+
+**What this looks like**
+Based on the information ","I'm really glad you reached out. What you're describing sounds difficult, and you deserve support.
+
+**What this looks like**
+Based on the information ",workplace_harassment,low
+5,My husband controls all the money and checks my phone every day.,coercive_control,medium,It sounds like you're going through a challenging situation in your relationship. Having someone control your finances and monitor your phone activity,"I'm really glad you reached out. What you're describing sounds difficult, and you deserve support.
+
+**What this looks like**
+Based on the information ","If you are in immediate danger, please contact your local emergency number or a crisis helpline right now.
+
+I'm really glad you reached out. What you'",coercive_control,high
