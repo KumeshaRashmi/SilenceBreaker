@@ -6,6 +6,15 @@ Advanced AI – Group Project 2026. SilenceBreaker is a **prototype** that ident
 abuse-related concerns from text, retrieves verified support information, and
 generates **evidence-grounded** guidance with **risk-escalation flags**.
 
+## Team
+
+| Index No. | Name |
+|---|---|
+| EG/2021/4685 | Muthukumari H.M.S. |
+| EG/2021/4738 | Ranasinghe R.M.W.O. |
+| EG/2021/4748 | Rashmi E.D.K. |
+| EG/2021/4775 | Samarasinghe C.Y. |
+
 > ⚠️ **Scope & ethics.** This is a prototype information/triage tool. It does **not**
 > provide legal, medical, or professional advice, does **not** diagnose, and routes
 > high-risk cases to *seek immediate local help*. It is not a substitute for
@@ -27,7 +36,7 @@ User text ─▶ Agent 1 Listener ─▶ Agent 2 Retriever ─▶ Agent 4 Risk �
 - **Agent 3 – Safety Planner:** LLM grounded only on retrieved evidence; urgent help first when risk is high.
 - Orchestrated with **LangGraph** (falls back to a sequential pipeline if not installed).
 
-### AI techniques demonstrated (assignment requires ≥3; this uses 5)
+### AI techniques used
 NLP preprocessing & classification · Transformers (DistilBERT/RoBERTa fine-tuning) ·
 Embeddings + RAG · Prompt engineering · Few-shot / in-context learning.
 
@@ -58,24 +67,27 @@ streamlit run app/streamlit_app.py
 ```
 
 > **OFFLINE mode:** with no API key set, the project still runs end-to-end using a
-> rule-based category classifier and a template planner. This makes grading
-> reproducible. Set an LLM key in `.env` for the full generative experience.
+> rule-based category classifier and a template planner, so the whole pipeline is
+> deterministic and reproducible. Set an LLM key in `.env` for the full generative experience.
 
 ---
 
-## Datasets (from assignment-approved sources)
+## Datasets
 
 | Purpose | Dataset | Link |
 |---|---|---|
 | Emotion / distress | `dair-ai/emotion` | https://huggingface.co/datasets/dair-ai/emotion |
-| Abuse / harassment text | Jigsaw Toxic Comment | https://huggingface.co/datasets/google/jigsaw_toxicity_pred |
+| Abuse classifier training | `cardiffnlp/tweet_eval` (hate subtask) | https://huggingface.co/datasets/cardiffnlp/tweet_eval |
+| Abuse classifier cross-domain eval | Jigsaw Toxic Comment | https://huggingface.co/datasets/google/jigsaw_toxicity_pred |
 | Ready emotion model | `j-hartmann/emotion-english-distilroberta-base` | https://huggingface.co/j-hartmann/emotion-english-distilroberta-base |
-| Knowledge base | curated in `data/kb/` | (write/verify + cite your own sources) |
+| Knowledge base | curated in `data/kb/` | original content, cited per-document |
 
 The 4-way abuse category (domestic / workplace / coercive / non-abuse) has no clean
 public dataset, so it is handled by a **few-shot LLM** (in-context learning) and/or a
-small hand-labelled set. The binary abuse detector is trained on Jigsaw for
-quantitative rigor.
+small hand-labelled set. The binary abuse/hate-speech detector is fine-tuned on
+`cardiffnlp/tweet_eval` (hate subtask) and evaluated two ways: in-distribution on its
+own test split, and cross-domain on Jigsaw (Wikipedia comments) to see how well a
+Twitter-trained classifier generalises to a different register of text.
 
 ---
 
@@ -88,8 +100,9 @@ python -m evaluation.eval_faithfulness    # category & risk accuracy + faithfuln
 python -m evaluation.ablation             # A (LLM) vs B (RAG) vs C (multi-agent)
 ```
 
-The **ablation study** (baseline vs RAG vs full multi-agent) is the key evaluation
-for marks. Edit `evaluation/test_prompts.py` to extend the test set.
+The **ablation study** (baseline vs RAG vs full multi-agent) is the most informative
+evaluation for understanding what each architectural layer contributes. Edit
+`evaluation/test_prompts.py` to extend the test set.
 
 ---
 
@@ -112,9 +125,10 @@ silencebreaker/
 ## Knowledge base note
 
 The documents in `data/kb/` are **general, original information** with clear
-disclaimers. Several contain `ACTION FOR THE TEAM` markers where you must insert
-**verified** national/regional helpline details and **cite** the official source in
-your report. Do not invent contact details or statistics.
+disclaimers and verified contact details (helplines, support organisations, legal
+aid) for the UK, US, Canada, Australia, and Sri Lanka, sourced from official
+organisations and cited at the bottom of each document. Do not invent contact
+details or statistics if you extend this knowledge base.
 
 ---
 
