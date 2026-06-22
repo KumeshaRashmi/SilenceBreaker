@@ -70,9 +70,10 @@ def analyze(text: str) -> dict:
 
     # (2) abusive vs not (trained binary head, optional)
     if _abuse is not None:
-        a = _abuse(t)[0]
-        is_abuse = a["label"].lower().endswith("1")
-        abuse_conf = round(float(a["score"]), 3)
+        results = _abuse(t, top_k=None)[0]
+        abuse_score = next(r["score"] for r in results if r["label"].lower().endswith("1"))
+        abuse_conf = round(float(abuse_score), 3)
+        is_abuse = abuse_score >= config.ABUSE_THRESHOLD
     else:
         is_abuse, abuse_conf = None, None
 
