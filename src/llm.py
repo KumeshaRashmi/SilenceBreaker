@@ -24,11 +24,27 @@ if not config.OFFLINE:
         config.OFFLINE = True
 
 
+# Free-tier Groq is capped at 6000 tokens/minute. A short fixed pause between
+# calls keeps evaluation runs under that cap instead of relying purely on
+# reactive backoff after a 429 (which still wastes the failed attempt).
+_MIN_SECONDS_BETWEEN_CALLS = 2.5
+_last_call_ts = 0.0
+
+
+def _pace():
+    global _last_call_ts
+    elapsed = time.time() - _last_call_ts
+    if elapsed < _MIN_SECONDS_BETWEEN_CALLS:
+        time.sleep(_MIN_SECONDS_BETWEEN_CALLS - elapsed)
+    _last_call_ts = time.time()
+
+
 def chat(system: str, user: str, temperature: float = 0.2) -> str:
     """Single chat completion with retry on rate limit. Falls back offline."""
     if config.OFFLINE or _client is None:
         return _offline_chat(system, user)
-    for attempt in range(5):
+    for attempt in range(6):
+        _pace()
         try:
             resp = _client.chat.completions.create(
                 model=config.LLM_MODEL,
@@ -39,7 +55,7 @@ def chat(system: str, user: str, temperature: float = 0.2) -> str:
             return resp.choices[0].message.content.strip()
         except Exception as exc:
             if "rate_limit" in str(exc).lower() or "429" in str(exc):
-                wait = 2 ** attempt
+                wait = min(2 ** attempt, 60)
                 print(f"[llm] Rate limit hit, retrying in {wait}s...")
                 time.sleep(wait)
             else:

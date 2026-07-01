@@ -23,6 +23,19 @@ from src.llm import chat
 from src.agents.retriever import Retriever
 from evaluation.test_prompts import SCENARIOS
 
+# ----------------------------------------------------------------------------
+# Shared cache: run() is expensive (2 LLM calls each) and was being invoked
+# separately inside eval_classifier, eval_faithfulness, and eval_ablation for
+# the *same* 15 scenarios -> 3x the necessary token usage. Compute once here.
+# ----------------------------------------------------------------------------
+_RUN_CACHE = {}
+
+
+def cached_run(text):
+    if text not in _RUN_CACHE:
+        _RUN_CACHE[text] = run(text)
+    return _RUN_CACHE[text]
+
 # Setup results directory
 RESULTS_DIR = os.path.join(os.path.dirname(__file__), "results")
 os.makedirs(RESULTS_DIR, exist_ok=True)
@@ -43,11 +56,10 @@ def eval_classifier():
     y_true = []
     y_pred = []
     
-    for text, expected_cat, expected_risk in SCENARIOS:
-        result = run(text)
-        # Map category to abuse/non-abuse
-        is_abuse = expected_cat != "non_abuse"
-        y_true.append(is_abuse)
+    for text, expected_cat, expected_risk, expected_abuse in SCENARIOS:
+        result = cached_run(text)
+        y_true.append(expected_abuse)
+        
         y_pred.append(result.get("is_abuse", False))
     
     # Metrics
@@ -90,7 +102,7 @@ def eval_retrieval():
     prec_k3, prec_k4 = 0, 0
     n = 0
     
-    for text, _, _ in SCENARIOS:
+    for text, _, _, _ in SCENARIOS:
         results_k3 = retriever.retrieve(text, k=3)
         results_k4 = retriever.retrieve(text, k=4)
         
@@ -141,42 +153,52 @@ def eval_faithfulness():
     
     faith_scores = []
     
-    JUDGE = """You are a strict fact-checker. Given EVIDENCE and a SENTENCE, answer
-SUPPORTED if the sentence's factual claims are entailed by the evidence, or if it
-is a generic empathetic / safety / disclaimer statement. Otherwise answer
-UNSUPPORTED. Reply with one word only."""
-    
+    # Batched judge: ONE call per scenario (all sentences at once) instead of
+    # one call per sentence. Cuts faithfulness-eval token usage by ~4-6x.
+    JUDGE = """You are a strict fact-checker. You will be given EVIDENCE and a
+numbered list of SENTENCES from a generated response. For EACH sentence, answer
+SUPPORTED if its factual claims are entailed by the evidence, or if it is a
+generic empathetic / safety / disclaimer statement. Otherwise answer UNSUPPORTED.
+
+Reply with exactly one line per sentence, in the format:
+1: SUPPORTED
+2: UNSUPPORTED
+...
+No other text."""
+
     def sentence_split(text):
         return [s.strip() for s in re.split(r"(?<=[.!?])\s+", text) if len(s.strip()) > 15]
-    
-    for text, _, _ in SCENARIOS:
-        result = run(text)
+
+    for text, _, _, _ in SCENARIOS:
+        result = cached_run(text)
         response = result.get("response", "")
         evidence = result.get("evidence", [])
-        
+
         if not response or not evidence:
             continue
-        
+
         ev_text = "\n".join(e["text"] for e in evidence)
         sents = sentence_split(response)
-        
+
         if not sents:
             continue
-        
-        ok = 0
-        for sent in sents:
-            if config.OFFLINE:
-                # In offline mode, assume all sentences are grounded (template-based)
-                ok += 1
-            else:
-                try:
-                    judge_result = chat(JUDGE, f"EVIDENCE:\n{ev_text}\n\nSENTENCE: {sent}", 
-                                       temperature=0.0).upper()
-                    if "SUPPORTED" in judge_result and "UNSUPPORTED" not in judge_result:
+
+        if config.OFFLINE:
+            ok = len(sents)
+        else:
+            numbered = "\n".join(f"{i+1}. {s}" for i, s in enumerate(sents))
+            try:
+                judge_result = chat(
+                    JUDGE, f"EVIDENCE:\n{ev_text}\n\nSENTENCES:\n{numbered}",
+                    temperature=0.0,
+                ).upper()
+                ok = 0
+                for line in judge_result.splitlines():
+                    if "SUPPORTED" in line and "UNSUPPORTED" not in line:
                         ok += 1
-                except:
-                    pass
-        
+            except Exception:
+                ok = 0
+
         faith = ok / len(sents) if sents else 0
         faith_scores.append(faith)
     
@@ -230,10 +252,10 @@ def eval_ablation():
     
     def full_system(text):
         """C: Full multi-agent system."""
-        return run(text)
+        return cached_run(text)
     
     # Collect data for ablation
-    for i, (text, exp_cat, exp_risk) in enumerate(SCENARIOS[:5], 1):  # limit to 5 for speed
+    for i, (text, exp_cat, exp_risk, exp_abuse) in enumerate(SCENARIOS[:5], 1):  # limit to 5 for speed
         print(f"\nScenario {i}:")
         print(f"Input: {text[:80]}...")
         
