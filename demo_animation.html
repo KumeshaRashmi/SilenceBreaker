@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SilenceBreaker — Agent 1 & 4 Explainer</title>
+<title>SilenceBreaker — Full Pipeline Explainer</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -21,17 +21,16 @@
   --green:      #4cd97b;
   --orange:     #ff9a3c;
   --purple:     #c8a0ff;
+  --blue:       #6e8af5;
+  --blue-light: #9bb3ff;
 }
 
 body {
   font-family: 'Segoe UI', system-ui, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  width: 100vw; height: 100vh;
-  overflow: hidden;
+  background: var(--bg); color: var(--text);
+  width: 100vw; height: 100vh; overflow: hidden;
 }
 
-/* ── Scenes ── */
 .scene {
   position: absolute; inset: 0;
   display: flex; flex-direction: column;
@@ -51,7 +50,6 @@ body {
 h1 { font-size: 3rem; font-weight: 800; }
 h2 { font-size: 1.7rem; font-weight: 700; color: var(--teal-light); margin-bottom: 20px; }
 
-/* ── Shared layout pieces ── */
 .agent-tag {
   display: inline-block;
   background: rgba(42,157,143,0.18); border: 1px solid var(--teal);
@@ -60,47 +58,30 @@ h2 { font-size: 1.7rem; font-weight: 700; color: var(--teal-light); margin-botto
   text-transform: uppercase; letter-spacing: 0.06em;
 }
 
-.step-row {
-  display: flex; align-items: center; margin-bottom: 18px; gap: 10px;
-}
+.step-row { display: flex; align-items: center; margin-bottom: 18px; gap: 10px; }
 .step-num {
   width: 28px; height: 28px; border-radius: 50%;
   background: var(--teal); color: #fff;
   font-size: 0.85rem; font-weight: 700;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
 .step-row h3 { font-size: 1.15rem; font-weight: 600; }
 
-.flow {
-  display: flex; align-items: center; gap: 20px;
-  width: 100%; max-width: 950px;
-}
+.flow { display: flex; align-items: center; gap: 20px; width: 100%; max-width: 950px; }
 .flow-box {
   flex: 1; background: var(--card);
-  border: 1px solid var(--border); border-radius: 16px;
-  padding: 18px;
+  border: 1px solid var(--border); border-radius: 16px; padding: 18px;
 }
-.flow-arrow {
-  font-size: 1.6rem; color: var(--teal);
-  flex-shrink: 0; line-height: 1;
-}
-
-.box-label {
-  font-size: 0.72rem; text-transform: uppercase;
-  letter-spacing: 0.06em; color: var(--muted); margin-bottom: 10px;
-}
+.flow-arrow { font-size: 1.6rem; color: var(--teal); flex-shrink: 0; line-height: 1; }
+.box-label { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 10px; }
 
 .text-input-block {
   background: rgba(0,0,0,0.35); border: 1px solid var(--border);
   border-radius: 10px; padding: 14px;
-  font-size: 0.9rem; line-height: 1.65;
-  font-style: italic; color: var(--text);
+  font-size: 0.9rem; line-height: 1.65; font-style: italic; color: var(--text);
 }
-.hl { background: rgba(255,92,114,0.28); border-radius: 3px;
-      padding: 1px 3px; color: var(--red); font-weight: 700; font-style: normal; }
-.hl-y { background: rgba(244,201,87,0.25); border-radius: 3px;
-        padding: 1px 3px; color: var(--yellow); font-weight: 700; font-style: normal; }
+.hl  { background: rgba(255,92,114,0.28); border-radius: 3px; padding: 1px 3px; color: var(--red);    font-weight: 700; font-style: normal; }
+.hl-y{ background: rgba(244,201,87,0.25); border-radius: 3px; padding: 1px 3px; color: var(--yellow); font-weight: 700; font-style: normal; }
 
 .badge {
   display: inline-flex; align-items: center; gap: 5px;
@@ -113,19 +94,14 @@ h2 { font-size: 1.7rem; font-weight: 700; color: var(--teal-light); margin-botto
 .b-green  { background: rgba(76,217,123,0.18);  border: 1px solid var(--green);  color: var(--green); }
 .b-teal   { background: rgba(82,217,200,0.15);  border: 1px solid var(--teal);   color: var(--teal-light); }
 .b-purple { background: rgba(200,160,255,0.15); border: 1px solid var(--purple); color: var(--purple); }
+.b-blue   { background: rgba(110,138,245,0.15); border: 1px solid var(--blue);   color: var(--blue-light); }
 
-.model-card {
-  text-align: center; padding: 20px 14px;
-  border-radius: 14px;
-}
+.model-card { text-align: center; padding: 20px 14px; border-radius: 14px; }
 .model-name { font-size: 1.05rem; font-weight: 700; }
 .model-sub  { font-size: 0.78rem; color: var(--muted); margin-top: 5px; line-height: 1.4; }
 
 .dots { display: flex; justify-content: center; gap: 7px; margin-top: 14px; }
-.dots span {
-  width: 9px; height: 9px; border-radius: 50%;
-  animation: bounce 1.3s infinite;
-}
+.dots span { width: 9px; height: 9px; border-radius: 50%; animation: bounce 1.3s infinite; }
 .dots span:nth-child(2) { animation-delay: 0.2s; }
 .dots span:nth-child(3) { animation-delay: 0.4s; }
 @keyframes bounce {
@@ -133,7 +109,7 @@ h2 { font-size: 1.7rem; font-weight: 700; color: var(--teal-light); margin-botto
   30% { transform: translateY(-9px); opacity: 1; }
 }
 
-/* ── Emotion bars ── */
+/* Emotion bars */
 .emo-bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 9px; }
 .emo-lbl { width: 60px; font-size: 0.83rem; text-align: right; color: var(--muted); }
 .emo-lbl.top-emo { color: var(--red); font-weight: 700; }
@@ -141,131 +117,95 @@ h2 { font-size: 1.7rem; font-weight: 700; color: var(--teal-light); margin-botto
 .bar-fill  { height: 100%; border-radius: 5px; width: 0; transition: width 1.1s ease; }
 .bar-pct   { width: 38px; font-size: 0.8rem; color: var(--muted); }
 
-/* ── Confidence bar ── */
-.conf-row { display: flex; align-items: center; gap: 12px; margin-top: 14px; }
-.conf-bar { flex: 1; height: 14px; background: var(--border); border-radius: 7px; overflow: hidden; }
+/* Confidence bar */
+.conf-row  { display: flex; align-items: center; gap: 12px; margin-top: 14px; }
+.conf-bar  { flex: 1; height: 14px; background: var(--border); border-radius: 7px; overflow: hidden; }
 .conf-fill { height: 100%; border-radius: 7px; width: 0; transition: width 1.4s ease; }
 .conf-num  { font-size: 0.9rem; font-weight: 700; min-width: 38px; }
 
-/* ── Few-shot cards ── */
+/* Few-shot cards */
 .fs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 10px; }
 .fs-card {
   background: rgba(0,0,0,0.3); border: 1px solid var(--border);
   border-radius: 9px; padding: 9px;
-  opacity: 0; transform: translateY(10px);
-  transition: all 0.45s ease;
+  opacity: 0; transform: translateY(10px); transition: all 0.45s ease;
 }
 .fs-card.show { opacity: 1; transform: translateY(0); }
 .fs-card-lbl { font-weight: 700; font-size: 0.78rem; margin-bottom: 3px; }
 .fs-card-txt { color: var(--muted); font-size: 0.77rem; font-style: italic; }
 
-/* ── Category grid ── */
+/* Category grid */
 .cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 10px; }
 .cat-item {
   background: rgba(0,0,0,0.3); border: 2px solid var(--border);
   border-radius: 10px; padding: 12px 10px;
-  text-align: center; font-size: 0.84rem;
-  opacity: 0.35; transition: all 0.45s;
+  text-align: center; font-size: 0.84rem; opacity: 0.35; transition: all 0.45s;
 }
 .cat-item.chosen {
-  opacity: 1; border-color: var(--teal);
-  background: rgba(42,157,143,0.18);
-  color: var(--teal-light); font-weight: 700;
-  box-shadow: 0 0 14px rgba(42,157,143,0.3);
+  opacity: 1; border-color: var(--teal); background: rgba(42,157,143,0.18);
+  color: var(--teal-light); font-weight: 700; box-shadow: 0 0 14px rgba(42,157,143,0.3);
 }
 
-/* ── Risk meter ── */
+/* RAG result cards */
+.rag-card {
+  opacity: 0; background: rgba(110,138,245,0.08);
+  border: 1px solid rgba(110,138,245,0.3); border-radius: 8px; padding: 9px;
+  transition: opacity 0.5s ease;
+}
+
+/* Risk meter */
 .risk-meter { display: flex; gap: 8px; margin: 14px 0; }
 .risk-seg {
   flex: 1; height: 34px; border-radius: 7px;
   display: flex; align-items: center; justify-content: center;
   font-size: 0.82rem; font-weight: 700;
-  opacity: 0.28; transition: all 0.55s;
-  border: 2px solid transparent;
+  opacity: 0.28; transition: all 0.55s; border: 2px solid transparent;
 }
-.rs-on-low  { opacity:1; background:rgba(76,217,123,0.18); border-color:var(--green); color:var(--green); }
-.rs-on-med  { opacity:1; background:rgba(244,201,87,0.18); border-color:var(--yellow); color:var(--yellow); }
-.rs-on-high { opacity:1; background:rgba(255,92,114,0.22); border-color:var(--red); color:var(--red); box-shadow:0 0 18px rgba(255,92,114,0.45); }
+.rs-on-low  { opacity:1; background:rgba(76,217,123,0.18);  border-color:var(--green);  color:var(--green); }
+.rs-on-med  { opacity:1; background:rgba(244,201,87,0.18);  border-color:var(--yellow); color:var(--yellow); }
+.rs-on-high { opacity:1; background:rgba(255,92,114,0.22);  border-color:var(--red);    color:var(--red); box-shadow:0 0 18px rgba(255,92,114,0.45); }
 
 .logic-line { opacity:0; transition:opacity 0.4s; font-size:0.83rem; color:var(--muted); margin-bottom:5px; }
 
-/* ── Pipeline diagram ── */
+/* Pipeline diagram */
 .pipe { display: flex; flex-direction: column; align-items: center; }
 .pipe-box {
   width: 240px; padding: 14px 18px; border-radius: 12px;
   background: var(--card); border: 2px solid var(--border);
   text-align: center; transition: all 0.4s;
 }
-.pipe-box.lit {
-  border-color: var(--teal);
-  background: rgba(42,157,143,0.12);
-  box-shadow: 0 0 22px rgba(42,157,143,0.35);
-}
+.pipe-box.lit { border-color: var(--teal); background: rgba(42,157,143,0.12); box-shadow: 0 0 22px rgba(42,157,143,0.35); }
 .pipe-box .pb-title { font-weight: 700; font-size: 0.95rem; color: var(--teal-light); }
 .pipe-box .pb-sub   { font-size: 0.78rem; color: var(--muted); margin-top: 3px; }
-
-.pipe-arr {
-  width: 2px; height: 22px; background: var(--teal); position: relative;
-}
+.pipe-arr { width: 2px; height: 22px; background: var(--teal); position: relative; }
 .pipe-arr::after {
   content:''; position:absolute; bottom:-7px; left:-4px;
   border-left:5px solid transparent; border-right:5px solid transparent;
   border-top:8px solid var(--teal);
 }
 
-/* ── Title gradient ── */
+/* Response structure lines */
+.resp-line { opacity:0; transition:opacity 0.4s; border-radius:6px; padding:8px 10px; margin-bottom:6px; }
+
+/* Title */
 .teal-gradient {
   background: linear-gradient(135deg, var(--teal-light) 0%, #ffffff 100%);
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 
-/* ── Crisis phone mockup ── */
-.phone {
-  width: 310px; background: var(--card);
-  border-radius: 24px; border: 2px solid var(--border);
-  overflow: hidden;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.55);
-}
-.phone-hdr {
-  background: var(--teal-dark); padding: 11px 16px;
-  font-size: 0.88rem; font-weight: 600;
-  display: flex; align-items: center; gap: 8px;
-}
-.phone-banner {
-  border-bottom: 2px solid var(--red);
-  background: rgba(255,92,114,0.14);
-  padding: 12px 13px;
-  opacity: 0; transition: opacity 0.5s;
-}
-.phone-body {
-  padding: 12px 14px;
-  font-size: 0.81rem; color: var(--muted); line-height: 1.6;
-  opacity: 0; transition: opacity 0.5s 0.8s;
-}
+/* Phone */
+.phone { width: 310px; background: var(--card); border-radius: 24px; border: 2px solid var(--border); overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.55); }
+.phone-hdr { background: var(--teal-dark); padding: 11px 16px; font-size: 0.88rem; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.phone-banner { border-bottom: 2px solid var(--red); background: rgba(255,92,114,0.14); padding: 12px 13px; opacity: 0; transition: opacity 0.5s; }
+.phone-body   { padding: 12px 14px; font-size: 0.81rem; color: var(--muted); line-height: 1.6; opacity: 0; transition: opacity 0.5s 0.8s; }
 
-/* ── Progress & Controls ── */
-#prog {
-  position: fixed; bottom: 0; left: 0; height: 4px;
-  background: linear-gradient(90deg, var(--teal), var(--teal-light));
-  width: 0%; transition: width 0.1s linear; z-index: 100;
-}
-#controls {
-  position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%);
-  display: flex; align-items: center; gap: 14px; z-index: 100;
-}
-.ctrl {
-  background: rgba(42,157,143,0.14); border: 1px solid var(--teal);
-  color: var(--teal-light); padding: 5px 16px;
-  border-radius: 20px; cursor: pointer; font-size: 0.82rem;
-  transition: background 0.2s;
-}
+/* Progress & Controls */
+#prog { position: fixed; bottom: 0; left: 0; height: 4px; background: linear-gradient(90deg, var(--teal), var(--teal-light)); width: 0%; transition: width 0.1s linear; z-index: 100; }
+#controls { position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 14px; z-index: 100; }
+.ctrl { background: rgba(42,157,143,0.14); border: 1px solid var(--teal); color: var(--teal-light); padding: 5px 16px; border-radius: 20px; cursor: pointer; font-size: 0.82rem; transition: background 0.2s; }
 .ctrl:hover { background: rgba(42,157,143,0.3); }
 #dots { display: flex; gap: 8px; }
-.dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--border); transition: background 0.3s; cursor: pointer;
-}
+.dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); transition: background 0.3s; cursor: pointer; }
 .dot.on { background: var(--teal-light); }
 
 #sub {
@@ -274,132 +214,105 @@ h2 { font-size: 1.7rem; font-weight: 700; color: var(--teal-light); margin-botto
   border-radius: 10px; padding: 11px 26px;
   font-size: 1.05rem; color: #e8f4f2;
   max-width: 820px; width: 90%; text-align: center; z-index: 99;
-  backdrop-filter: blur(10px);
-  line-height: 1.55; letter-spacing: 0.01em;
+  backdrop-filter: blur(10px); line-height: 1.55;
   box-shadow: 0 0 18px rgba(42,157,143,0.25);
 }
-#sub-label {
-  font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em;
-  color: var(--teal-light); font-weight: 700; margin-bottom: 5px;
-}
+#sub-label { font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--teal-light); font-weight: 700; margin-bottom: 5px; }
 
-@keyframes fadeUp {
-  from { opacity:0; transform:translateY(18px); }
-  to   { opacity:1; transform:translateY(0); }
-}
+@keyframes fadeUp { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
 .fade-up { animation: fadeUp 0.65s ease forwards; }
-
-@keyframes pulseGlow {
-  0%,100% { box-shadow: 0 0 8px rgba(42,157,143,0.3); }
-  50%      { box-shadow: 0 0 26px rgba(42,157,143,0.7); }
-}
+@keyframes pulseGlow { 0%,100% { box-shadow:0 0 8px rgba(42,157,143,0.3); } 50% { box-shadow:0 0 26px rgba(42,157,143,0.7); } }
 .pulsing { animation: pulseGlow 2s infinite; }
 </style>
 </head>
 <body>
 
-<!-- ══════════════════════════════════════════
-     SCENE 0  —  Title
-══════════════════════════════════════════ -->
+<!-- ═══ SCENE 0 — Title ═══ -->
 <div class="scene active" id="s0">
   <div style="text-align:center;">
     <h1 class="teal-gradient fade-up">SilenceBreaker</h1>
     <p style="color:var(--muted);font-size:1.1rem;margin-top:8px;" class="fade-up">
-      AI Pipeline Explainer — Listener &amp; Risk Evaluator
+      Full AI Pipeline — All Four Agents
     </p>
-    <div style="display:flex;gap:20px;justify-content:center;margin-top:36px;">
-      <div style="background:var(--card);border:2px solid var(--teal);border-radius:16px;
-                  padding:20px 32px;text-align:center;box-shadow:0 0 20px rgba(42,157,143,0.3);
-                  animation:fadeUp 0.7s 0.3s ease both;">
-        <div style="font-size:2.5rem;font-weight:800;color:var(--teal-light);">1</div>
-        <div style="font-size:0.95rem;margin-top:4px;">Situation Listener</div>
+    <div style="display:flex;gap:16px;justify-content:center;margin-top:36px;">
+      <div style="background:var(--card);border:2px solid var(--teal);border-radius:14px;padding:16px 24px;text-align:center;box-shadow:0 0 20px rgba(42,157,143,0.3);animation:fadeUp 0.7s 0.2s ease both;">
+        <div style="font-size:2rem;font-weight:800;color:var(--teal-light);">1</div>
+        <div style="font-size:0.85rem;margin-top:3px;">Listener</div>
       </div>
-      <div style="background:var(--card);border:2px solid var(--red);border-radius:16px;
-                  padding:20px 32px;text-align:center;box-shadow:0 0 20px rgba(255,92,114,0.3);
-                  animation:fadeUp 0.7s 0.5s ease both;">
-        <div style="font-size:2.5rem;font-weight:800;color:var(--red);">4</div>
-        <div style="font-size:0.95rem;margin-top:4px;">Risk Evaluator</div>
+      <div style="background:var(--card);border:2px solid var(--blue);border-radius:14px;padding:16px 24px;text-align:center;box-shadow:0 0 20px rgba(110,138,245,0.3);animation:fadeUp 0.7s 0.35s ease both;">
+        <div style="font-size:2rem;font-weight:800;color:var(--blue-light);">2</div>
+        <div style="font-size:0.85rem;margin-top:3px;">Retriever</div>
+      </div>
+      <div style="background:var(--card);border:2px solid var(--yellow);border-radius:14px;padding:16px 24px;text-align:center;box-shadow:0 0 20px rgba(244,201,87,0.3);animation:fadeUp 0.7s 0.5s ease both;">
+        <div style="font-size:2rem;font-weight:800;color:var(--yellow);">3</div>
+        <div style="font-size:0.85rem;margin-top:3px;">Planner</div>
+      </div>
+      <div style="background:var(--card);border:2px solid var(--red);border-radius:14px;padding:16px 24px;text-align:center;box-shadow:0 0 20px rgba(255,92,114,0.3);animation:fadeUp 0.7s 0.65s ease both;">
+        <div style="font-size:2rem;font-weight:800;color:var(--red);">4</div>
+        <div style="font-size:0.85rem;margin-top:3px;">Risk Evaluator</div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     SCENE 1  —  Architecture overview
-══════════════════════════════════════════ -->
+<!-- ═══ SCENE 1 — Architecture ═══ -->
 <div class="scene" id="s1">
   <span class="time-stamp">0:00 – 0:10</span>
-  <h2>The Pipeline</h2>
+  <h2>The Full Pipeline</h2>
   <div style="display:flex;gap:52px;align-items:center;">
-    <!-- Diagram -->
     <div class="pipe">
       <div class="pipe-box" style="background:rgba(42,157,143,0.2);border-color:var(--teal);">
         <div class="pb-title">User Input</div>
         <div class="pb-sub">Free-text situation</div>
       </div>
       <div class="pipe-arr"></div>
-      <div class="pipe-box lit pulsing" id="arch1">
+      <div class="pipe-box lit pulsing">
         <div class="pb-title">Agent 1 — Listener</div>
         <div class="pb-sub">Classify abuse + distress</div>
       </div>
       <div class="pipe-arr"></div>
-      <div class="pipe-box">
-        <div class="pb-title">Agent 2 — Retriever</div>
+      <div class="pipe-box lit pulsing" style="border-color:var(--blue);background:rgba(110,138,245,0.12);box-shadow:0 0 22px rgba(110,138,245,0.35);">
+        <div class="pb-title" style="color:var(--blue-light)">Agent 2 — Retriever</div>
         <div class="pb-sub">FAISS top-k RAG</div>
       </div>
       <div class="pipe-arr"></div>
-      <div class="pipe-box lit pulsing" id="arch4">
+      <div class="pipe-box lit pulsing" style="border-color:var(--red);background:rgba(255,92,114,0.12);box-shadow:0 0 22px rgba(255,92,114,0.35);">
         <div class="pb-title" style="color:var(--red)">Agent 4 — Risk Evaluator</div>
         <div class="pb-sub">Danger cues + distress fusion</div>
       </div>
       <div class="pipe-arr"></div>
-      <div class="pipe-box">
-        <div class="pb-title">Agent 3 — Planner</div>
+      <div class="pipe-box lit pulsing" style="border-color:var(--yellow);background:rgba(244,201,87,0.12);box-shadow:0 0 22px rgba(244,201,87,0.35);">
+        <div class="pb-title" style="color:var(--yellow)">Agent 3 — Planner</div>
         <div class="pb-sub">LLM response generation</div>
       </div>
     </div>
-    <!-- Description -->
-    <div style="max-width:280px;">
-      <p style="color:var(--teal-light);font-weight:600;margin-bottom:14px;">
-        I built two of these agents:
-      </p>
-      <div style="display:flex;flex-direction:column;gap:14px;">
-        <div style="display:flex;gap:10px;align-items:flex-start;">
-          <div class="step-num">1</div>
-          <div>
-            <div style="font-weight:600;margin-bottom:3px;">Situation Listener</div>
-            <div style="font-size:0.81rem;color:var(--muted);line-height:1.5;">
-              First to run. Takes raw text and produces emotion, abuse flag, and category.
-            </div>
-          </div>
-        </div>
-        <div style="display:flex;gap:10px;align-items:flex-start;">
-          <div class="step-num" style="background:var(--red);">4</div>
-          <div>
-            <div style="font-weight:600;margin-bottom:3px;">Risk Evaluator</div>
-            <div style="font-size:0.81rem;color:var(--muted);line-height:1.5;">
-              Fuses distress level with regex danger rules to set the final risk label.
-            </div>
-          </div>
-        </div>
+    <div style="max-width:280px;display:flex;flex-direction:column;gap:12px;">
+      <div style="display:flex;gap:10px;align-items:flex-start;">
+        <div class="step-num">1</div>
+        <div><div style="font-weight:600;font-size:0.9rem;">Listener</div><div style="font-size:0.79rem;color:var(--muted);margin-top:2px;">Emotion + abuse + category from raw text</div></div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:flex-start;">
+        <div class="step-num" style="background:var(--blue);">2</div>
+        <div><div style="font-weight:600;font-size:0.9rem;">Retriever</div><div style="font-size:0.79rem;color:var(--muted);margin-top:2px;">MiniLM embeddings + FAISS vector search</div></div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:flex-start;">
+        <div class="step-num" style="background:var(--red);">4</div>
+        <div><div style="font-weight:600;font-size:0.9rem;">Risk Evaluator</div><div style="font-size:0.79rem;color:var(--muted);margin-top:2px;">Distress + regex danger rules → risk level</div></div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:flex-start;">
+        <div class="step-num" style="background:var(--yellow);color:#000;">3</div>
+        <div><div style="font-weight:600;font-size:0.9rem;">Planner</div><div style="font-size:0.79rem;color:var(--muted);margin-top:2px;">Prompt-engineered LLM grounded in evidence</div></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     SCENE 2  —  Emotion classifier
-══════════════════════════════════════════ -->
+<!-- ═══ SCENE 2 — Emotion Classifier ═══ -->
 <div class="scene" id="s2">
   <span class="time-stamp">0:10 – 0:22</span>
-  <div class="agent-tag">Agent 1 — Listener &nbsp;·&nbsp; Step 1 of 3</div>
-  <div class="step-row">
-    <div class="step-num">1</div>
-    <h3>Emotion Classifier → Distress Level</h3>
-  </div>
-
+  <div class="agent-tag">Agent 1 — Listener · Step 1 of 3</div>
+  <div class="step-row"><div class="step-num">1</div><h3>Emotion Classifier → Distress Level</h3></div>
   <div class="flow">
-    <!-- Input -->
     <div class="flow-box">
       <div class="box-label">User input</div>
       <div class="text-input-block">
@@ -407,172 +320,80 @@ h2 { font-size: 1.7rem; font-weight: 700; color: var(--teal-light); margin-botto
         I'm <span class="hl">terrified</span> and can't leave."
       </div>
     </div>
-
     <div class="flow-arrow">→</div>
-
-    <!-- Model -->
     <div class="flow-box model-card" style="border-color:var(--teal);background:rgba(42,157,143,0.07);">
       <div class="model-name" style="color:var(--teal-light)">Transformer Model</div>
-      <div class="model-sub">Pre-trained emotion classifier</div>
-      <div class="dots">
-        <span style="background:var(--teal)"></span>
-        <span style="background:var(--teal)"></span>
-        <span style="background:var(--teal)"></span>
-      </div>
+      <div class="model-sub">Pre-trained emotion classifier<br>DistilRoBERTa</div>
+      <div class="dots"><span style="background:var(--teal)"></span><span style="background:var(--teal)"></span><span style="background:var(--teal)"></span></div>
     </div>
-
     <div class="flow-arrow">→</div>
-
-    <!-- Output -->
     <div class="flow-box">
       <div class="box-label">Emotion scores</div>
-      <div id="emo-bars">
-        <div class="emo-bar-row">
-          <div class="emo-lbl top-emo">Fear</div>
-          <div class="bar-track"><div class="bar-fill" id="bf0" style="background:var(--red)"></div></div>
-          <div class="bar-pct" style="color:var(--red)">0.87</div>
-        </div>
-        <div class="emo-bar-row">
-          <div class="emo-lbl">Anger</div>
-          <div class="bar-track"><div class="bar-fill" id="bf1" style="background:var(--orange)"></div></div>
-          <div class="bar-pct">0.08</div>
-        </div>
-        <div class="emo-bar-row">
-          <div class="emo-lbl">Sadness</div>
-          <div class="bar-track"><div class="bar-fill" id="bf2" style="background:#6e8af5"></div></div>
-          <div class="bar-pct">0.04</div>
-        </div>
-        <div class="emo-bar-row">
-          <div class="emo-lbl">Neutral</div>
-          <div class="bar-track"><div class="bar-fill" id="bf3" style="background:var(--muted)"></div></div>
-          <div class="bar-pct">0.01</div>
-        </div>
-      </div>
+      <div class="emo-bar-row"><div class="emo-lbl top-emo">Fear</div><div class="bar-track"><div class="bar-fill" id="bf0" style="background:var(--red)"></div></div><div class="bar-pct" style="color:var(--red)">0.87</div></div>
+      <div class="emo-bar-row"><div class="emo-lbl">Anger</div><div class="bar-track"><div class="bar-fill" id="bf1" style="background:var(--orange)"></div></div><div class="bar-pct">0.08</div></div>
+      <div class="emo-bar-row"><div class="emo-lbl">Sadness</div><div class="bar-track"><div class="bar-fill" id="bf2" style="background:#6e8af5"></div></div><div class="bar-pct">0.04</div></div>
+      <div class="emo-bar-row"><div class="emo-lbl">Neutral</div><div class="bar-track"><div class="bar-fill" id="bf3" style="background:var(--muted)"></div></div><div class="bar-pct">0.01</div></div>
       <div style="margin-top:14px;text-align:center;">
         <div style="font-size:0.78rem;color:var(--muted);margin-bottom:7px;">maps to distress level</div>
-        <span class="badge b-red" id="distress-badge"
-              style="font-size:1rem;padding:8px 22px;opacity:0;transition:opacity 0.6s;">
-          ⚠ HIGH DISTRESS
-        </span>
+        <span class="badge b-red" id="distress-badge" style="font-size:1rem;padding:8px 22px;opacity:0;transition:opacity 0.6s;">⚠ HIGH DISTRESS</span>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     SCENE 3  —  Abuse detector
-══════════════════════════════════════════ -->
+<!-- ═══ SCENE 3 — Abuse Detector ═══ -->
 <div class="scene" id="s3">
   <span class="time-stamp">0:22 – 0:32</span>
-  <div class="agent-tag">Agent 1 — Listener &nbsp;·&nbsp; Step 2 of 3</div>
-  <div class="step-row">
-    <div class="step-num">2</div>
-    <h3>Abuse Detector — Fine-tuned DistilBERT</h3>
-  </div>
-
+  <div class="agent-tag">Agent 1 — Listener · Step 2 of 3</div>
+  <div class="step-row"><div class="step-num">2</div><h3>Abuse Detector — Fine-tuned DistilBERT</h3></div>
   <div class="flow">
-    <!-- Input -->
     <div class="flow-box">
       <div class="box-label">User input</div>
-      <div class="text-input-block">
-        "He threatened to kill me tonight. I'm terrified and can't leave."
-      </div>
-      <div style="margin-top:10px;font-size:0.8rem;color:var(--muted);">
-        <span style="color:var(--teal-light)">✓</span> Cleaned &amp; normalised
-      </div>
+      <div class="text-input-block">"He threatened to kill me tonight. I'm terrified and can't leave."</div>
+      <div style="margin-top:10px;font-size:0.8rem;color:var(--muted);"><span style="color:var(--teal-light)">✓</span> Cleaned &amp; normalised</div>
     </div>
-
     <div class="flow-arrow">→</div>
-
-    <!-- Model -->
     <div class="flow-box model-card" style="border-color:var(--purple);background:rgba(200,160,255,0.05);">
       <div class="model-name" style="color:var(--purple)">DistilBERT</div>
-      <div class="model-sub">
-        Fine-tuned binary classifier<br>
-        <span style="color:var(--teal-light)">trained by us</span>
-      </div>
-      <div class="dots">
-        <span style="background:var(--purple)"></span>
-        <span style="background:var(--purple)"></span>
-        <span style="background:var(--purple)"></span>
-      </div>
+      <div class="model-sub">Fine-tuned binary classifier<br><span style="color:var(--teal-light)">trained by us</span></div>
+      <div class="dots"><span style="background:var(--purple)"></span><span style="background:var(--purple)"></span><span style="background:var(--purple)"></span></div>
     </div>
-
     <div class="flow-arrow">→</div>
-
-    <!-- Output -->
     <div class="flow-box">
       <div class="box-label">Classification result</div>
-      <div style="text-align:center;margin-bottom:20px;">
-        <span class="badge b-red" style="font-size:1.1rem;padding:10px 26px;">
-          ABUSIVE ✓
-        </span>
-      </div>
+      <div style="text-align:center;margin-bottom:20px;"><span class="badge b-red" style="font-size:1.1rem;padding:10px 26px;">ABUSIVE ✓</span></div>
       <div style="font-size:0.8rem;color:var(--muted);margin-bottom:6px;">Confidence score:</div>
       <div class="conf-row">
-        <div class="conf-bar">
-          <div class="conf-fill" id="abuse-fill" style="background:var(--red)"></div>
-        </div>
+        <div class="conf-bar"><div class="conf-fill" id="abuse-fill" style="background:var(--red)"></div></div>
         <div class="conf-num" style="color:var(--red)">94%</div>
       </div>
-      <div style="margin-top:16px;font-size:0.8rem;color:var(--muted);">
-        Output: <code style="color:var(--teal-light);font-style:normal;">is_abuse = True</code>
-      </div>
+      <div style="margin-top:16px;font-size:0.8rem;color:var(--muted);">Output: <code style="color:var(--teal-light);font-style:normal;">is_abuse = True</code></div>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     SCENE 4  —  Few-shot category
-══════════════════════════════════════════ -->
+<!-- ═══ SCENE 4 — Few-Shot Category ═══ -->
 <div class="scene" id="s4">
   <span class="time-stamp">0:32 – 0:42</span>
-  <div class="agent-tag">Agent 1 — Listener &nbsp;·&nbsp; Step 3 of 3</div>
-  <div class="step-row">
-    <div class="step-num">3</div>
-    <h3>Situation Category — Few-Shot LLM</h3>
-  </div>
-
+  <div class="agent-tag">Agent 1 — Listener · Step 3 of 3</div>
+  <div class="step-row"><div class="step-num">3</div><h3>Situation Category — Few-Shot LLM</h3></div>
   <div style="display:flex;gap:20px;width:100%;max-width:960px;align-items:flex-start;">
-    <!-- Examples -->
     <div class="flow-box" style="max-width:270px;flex-shrink:0;">
       <div class="box-label">4 labelled examples sent to LLM</div>
       <div class="fs-grid">
-        <div class="fs-card" id="ex0">
-          <div class="fs-card-lbl" style="color:var(--red)">Domestic Abuse</div>
-          <div class="fs-card-txt">"He hits me when he drinks..."</div>
-        </div>
-        <div class="fs-card" id="ex1">
-          <div class="fs-card-lbl" style="color:var(--yellow)">Workplace Harassment</div>
-          <div class="fs-card-txt">"My manager grabs my arm..."</div>
-        </div>
-        <div class="fs-card" id="ex2">
-          <div class="fs-card-lbl" style="color:var(--orange)">Coercive Control</div>
-          <div class="fs-card-txt">"He controls all my money..."</div>
-        </div>
-        <div class="fs-card" id="ex3">
-          <div class="fs-card-lbl" style="color:var(--green)">Non-Abuse</div>
-          <div class="fs-card-txt">"My neighbour was rude..."</div>
-        </div>
+        <div class="fs-card" id="ex0"><div class="fs-card-lbl" style="color:var(--red)">Domestic Abuse</div><div class="fs-card-txt">"He hits me when he drinks..."</div></div>
+        <div class="fs-card" id="ex1"><div class="fs-card-lbl" style="color:var(--yellow)">Workplace Harassment</div><div class="fs-card-txt">"My manager grabs my arm..."</div></div>
+        <div class="fs-card" id="ex2"><div class="fs-card-lbl" style="color:var(--orange)">Coercive Control</div><div class="fs-card-txt">"He controls all my money..."</div></div>
+        <div class="fs-card" id="ex3"><div class="fs-card-lbl" style="color:var(--green)">Non-Abuse</div><div class="fs-card-txt">"My neighbour was rude..."</div></div>
       </div>
     </div>
-
     <div class="flow-arrow" style="margin-top:55px;">→</div>
-
-    <!-- LLM -->
     <div class="flow-box model-card" style="border-color:var(--yellow);background:rgba(244,201,87,0.05);max-width:170px;flex-shrink:0;">
       <div class="model-name" style="color:var(--yellow)">LLM</div>
       <div class="model-sub">Few-shot prompt<br>4 examples only</div>
-      <div class="dots">
-        <span style="background:var(--yellow)"></span>
-        <span style="background:var(--yellow)"></span>
-        <span style="background:var(--yellow)"></span>
-      </div>
+      <div class="dots"><span style="background:var(--yellow)"></span><span style="background:var(--yellow)"></span><span style="background:var(--yellow)"></span></div>
     </div>
-
     <div class="flow-arrow" style="margin-top:55px;">→</div>
-
-    <!-- Categories -->
     <div class="flow-box" style="flex:1;">
       <div class="box-label">Category output</div>
       <div class="cat-grid">
@@ -588,23 +409,76 @@ h2 { font-size: 1.7rem; font-weight: 700; color: var(--teal-light); margin-botto
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     SCENE 5  —  Risk Evaluator
-══════════════════════════════════════════ -->
+<!-- ═══ SCENE 5 — Agent 2: RAG Retriever ═══ -->
 <div class="scene" id="s5">
-  <span class="time-stamp">0:42 – 0:55</span>
-  <div class="agent-tag" style="border-color:var(--red);background:rgba(255,92,114,0.14);color:var(--red);">
-    Agent 4 — Risk Evaluator
+  <span class="time-stamp">0:42 – 0:53</span>
+  <div class="agent-tag" style="border-color:var(--blue);background:rgba(110,138,245,0.14);color:var(--blue-light);">Agent 2 — Retriever</div>
+  <div class="step-row"><div class="step-num" style="background:var(--blue);">2</div><h3>Embed Query → FAISS Top-4 Knowledge Chunks</h3></div>
+  <div class="flow">
+    <div class="flow-box">
+      <div class="box-label">Query (from Agent 1)</div>
+      <div style="background:rgba(0,0,0,0.35);border:1px solid var(--border);border-radius:10px;padding:14px;">
+        <div style="font-size:0.78rem;margin-bottom:6px;">
+          <span style="color:var(--blue-light);font-weight:700;">Category:</span>
+          <span style="color:var(--teal-light);margin-left:4px;">domestic_abuse</span>
+        </div>
+        <div style="font-size:0.85rem;color:var(--muted);font-style:italic;line-height:1.5;">
+          "He threatened to kill me tonight. I'm terrified and can't leave."
+        </div>
+      </div>
+      <div style="margin-top:10px;font-size:0.78rem;color:var(--muted);">→ Combined into single retrieval query</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box model-card" style="border-color:var(--blue);background:rgba(110,138,245,0.06);">
+      <div class="model-name" style="color:var(--blue-light)">MiniLM-L6</div>
+      <div class="model-sub">Sentence transformer<br>384-dim vector</div>
+      <div class="dots"><span style="background:var(--blue)"></span><span style="background:var(--blue)"></span><span style="background:var(--blue)"></span></div>
+      <div style="margin-top:12px;font-size:0.74rem;color:var(--blue);font-weight:600;">FAISS cosine similarity</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-box">
+      <div class="box-label">Top-4 retrieved KB chunks</div>
+      <div style="display:flex;flex-direction:column;gap:7px;">
+        <div class="rag-card" id="rc0">
+          <div style="display:flex;justify-content:space-between;margin-bottom:3px;">
+            <span style="font-size:0.76rem;color:var(--blue-light);font-weight:700;">kb_domestic_safety_planning</span>
+            <span style="font-size:0.74rem;color:var(--blue);">0.82</span>
+          </div>
+          <div style="font-size:0.75rem;color:var(--muted);font-style:italic;">"A safety plan helps you prepare steps to take if..."</div>
+        </div>
+        <div class="rag-card" id="rc1">
+          <div style="display:flex;justify-content:space-between;margin-bottom:3px;">
+            <span style="font-size:0.76rem;color:var(--blue-light);font-weight:700;">kb_emergency_when_to_call</span>
+            <span style="font-size:0.74rem;color:var(--blue);">0.78</span>
+          </div>
+          <div style="font-size:0.75rem;color:var(--muted);font-style:italic;">"Call 999 if you are in immediate danger..."</div>
+        </div>
+        <div class="rag-card" id="rc2">
+          <div style="display:flex;justify-content:space-between;margin-bottom:3px;">
+            <span style="font-size:0.76rem;color:var(--blue-light);font-weight:700;">kb_recognising_abuse</span>
+            <span style="font-size:0.74rem;color:var(--blue);">0.71</span>
+          </div>
+          <div style="font-size:0.75rem;color:var(--muted);font-style:italic;">"Signs of domestic abuse include threats, physical harm..."</div>
+        </div>
+        <div class="rag-card" id="rc3">
+          <div style="display:flex;justify-content:space-between;margin-bottom:3px;">
+            <span style="font-size:0.76rem;color:var(--blue-light);font-weight:700;">kb_domestic_support_orgs</span>
+            <span style="font-size:0.74rem;color:var(--blue);">0.65</span>
+          </div>
+          <div style="font-size:0.75rem;color:var(--muted);font-style:italic;">"National Domestic Abuse Helpline: 0808 2000 247..."</div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="step-row">
-    <div class="step-num" style="background:var(--red);">4</div>
-    <h3>Danger Keyword Scan + Distress Fusion</h3>
-  </div>
+</div>
 
+<!-- ═══ SCENE 6 — Agent 4: Risk Evaluator ═══ -->
+<div class="scene" id="s6">
+  <span class="time-stamp">0:53 – 1:06</span>
+  <div class="agent-tag" style="border-color:var(--red);background:rgba(255,92,114,0.14);color:var(--red);">Agent 4 — Risk Evaluator</div>
+  <div class="step-row"><div class="step-num" style="background:var(--red);">4</div><h3>Danger Keyword Scan + Distress Fusion</h3></div>
   <div style="display:flex;gap:22px;width:100%;max-width:960px;align-items:flex-start;">
-    <!-- Inputs column -->
     <div style="flex:1;display:flex;flex-direction:column;gap:12px;">
-      <!-- From Agent 1 -->
       <div class="flow-box">
         <div class="box-label">From Agent 1</div>
         <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;gap:8px;">
@@ -612,27 +486,20 @@ h2 { font-size: 1.7rem; font-weight: 700; color: var(--teal-light); margin-botto
           <span style="font-size:0.8rem;color:var(--muted)">is_abuse: True</span>
         </div>
       </div>
-      <!-- Regex scan -->
       <div class="flow-box">
         <div class="box-label">Regex danger scan</div>
         <div class="text-input-block" style="font-size:0.87rem;">
-          "He threatened to <span class="hl">kill me</span>
-          <span class="hl">tonight</span>.
-          I'm <span class="hl-y">terrified</span> and
-          <span class="hl-y">can't leave</span>."
+          "He threatened to <span class="hl">kill me</span> <span class="hl">tonight</span>. I'm <span class="hl-y">terrified</span> and <span class="hl-y">can't leave</span>."
         </div>
         <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:6px;">
-          <span class="badge b-red"  id="tk0" style="opacity:0;transition:opacity 0.4s;">💀 kill</span>
-          <span class="badge b-red"  id="tk1" style="opacity:0;transition:opacity 0.4s;">⏰ tonight</span>
+          <span class="badge b-red"    id="tk0" style="opacity:0;transition:opacity 0.4s;">💀 kill</span>
+          <span class="badge b-red"    id="tk1" style="opacity:0;transition:opacity 0.4s;">⏰ tonight</span>
           <span class="badge b-yellow" id="tk2" style="opacity:0;transition:opacity 0.4s;">😨 terrified</span>
           <span class="badge b-yellow" id="tk3" style="opacity:0;transition:opacity 0.4s;">🔒 can't leave</span>
         </div>
       </div>
     </div>
-
     <div class="flow-arrow" style="margin-top:55px;">→</div>
-
-    <!-- Risk output -->
     <div class="flow-box" style="flex:1;">
       <div class="box-label">Risk level</div>
       <div class="risk-meter">
@@ -641,29 +508,85 @@ h2 { font-size: 1.7rem; font-weight: 700; color: var(--teal-light); margin-botto
         <div class="risk-seg" id="rs-high">HIGH</div>
       </div>
       <div style="margin-top:14px;">
-        <div class="logic-line" id="ll0">• distress = HIGH &nbsp;→&nbsp; base score: 2</div>
-        <div class="logic-line" id="ll1">• "kill" matches HIGH_RISK regex &nbsp;→&nbsp; score forced to 2</div>
+        <div class="logic-line" id="ll0">• distress = HIGH → base score: 2</div>
+        <div class="logic-line" id="ll1">• "kill" matches HIGH_RISK regex → score forced to 2</div>
         <div class="logic-line" id="ll2">• Rule overrides classifier — safety wins</div>
         <div class="logic-line" id="ll3" style="margin-top:10px;font-size:0.95rem;">
           → <span style="color:var(--red);font-weight:700;">RISK = HIGH</span>
-          &nbsp;&nbsp;
-          <span style="color:var(--muted);font-size:0.8rem;">urgent_note = True</span>
+          &nbsp;&nbsp;<span style="color:var(--muted);font-size:0.8rem;">urgent_note = True</span>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     SCENE 6  —  Crisis banner
-══════════════════════════════════════════ -->
-<div class="scene" id="s6">
-  <span class="time-stamp">0:55 – 1:00</span>
-  <div class="agent-tag" style="border-color:var(--red);background:rgba(255,92,114,0.14);color:var(--red);">
-    Risk = HIGH → UI Response
+<!-- ═══ SCENE 7 — Agent 3: Safety Planner ═══ -->
+<div class="scene" id="s7">
+  <span class="time-stamp">1:06 – 1:17</span>
+  <div class="agent-tag" style="border-color:var(--yellow);background:rgba(244,201,87,0.14);color:var(--yellow);">Agent 3 — Safety Planner</div>
+  <div class="step-row"><div class="step-num" style="background:var(--yellow);color:#000;">3</div><h3>Prompt Engineering → Evidence-Grounded Response</h3></div>
+  <div style="display:flex;gap:20px;width:100%;max-width:980px;align-items:flex-start;">
+    <!-- Left: inputs + prompt rules -->
+    <div style="flex:1;display:flex;flex-direction:column;gap:10px;">
+      <div class="flow-box">
+        <div class="box-label">Inputs</div>
+        <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:8px;">
+          <span class="badge b-red">Risk: HIGH</span>
+          <span class="badge b-teal">domestic_abuse</span>
+          <span class="badge b-blue">4 evidence chunks</span>
+        </div>
+        <div style="font-size:0.78rem;color:var(--muted);">Retrieved KB passages passed as context</div>
+      </div>
+      <div class="flow-box">
+        <div class="box-label">System prompt rules</div>
+        <div style="display:flex;flex-direction:column;gap:7px;">
+          <div id="pr0" style="opacity:0;transition:opacity 0.4s;font-size:0.82rem;display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--teal-light);flex-shrink:0;">→</span><span>Be calm, warm, and non-judgmental</span></div>
+          <div id="pr1" style="opacity:0;transition:opacity 0.4s;font-size:0.82rem;display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--teal-light);flex-shrink:0;">→</span><span>Ground <strong>every</strong> claim in the evidence only</span></div>
+          <div id="pr2" style="opacity:0;transition:opacity 0.4s;font-size:0.82rem;display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--teal-light);flex-shrink:0;">→</span><span>No legal or medical judgments</span></div>
+          <div id="pr3" style="opacity:0;transition:opacity 0.4s;font-size:0.82rem;display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--red);flex-shrink:0;font-weight:700;">→</span><span style="color:var(--red);">If RISK = HIGH → urgent help <strong>first</strong></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="flow-arrow" style="margin-top:60px;">→</div>
+    <!-- Center: LLM -->
+    <div class="flow-box model-card" style="border-color:var(--yellow);background:rgba(244,201,87,0.05);max-width:155px;flex-shrink:0;">
+      <div class="model-name" style="color:var(--yellow)">LLM</div>
+      <div class="model-sub">Llama 3.1<br>via Groq<br><br>Prompt engineering + chain-of-thought</div>
+      <div class="dots"><span style="background:var(--yellow)"></span><span style="background:var(--yellow)"></span><span style="background:var(--yellow)"></span></div>
+    </div>
+    <div class="flow-arrow" style="margin-top:60px;">→</div>
+    <!-- Right: response structure -->
+    <div class="flow-box" style="flex:1;">
+      <div class="box-label">Structured response</div>
+      <div id="rs0" class="resp-line" style="border-left:3px solid var(--red);background:rgba(255,92,114,0.08);">
+        <div style="font-size:0.79rem;color:var(--red);font-weight:700;">⚡ Urgent help first</div>
+        <div style="font-size:0.75rem;color:var(--muted);">Call 999 · Helpline 0808 2000 247</div>
+      </div>
+      <div id="rs1" class="resp-line" style="border-left:3px solid var(--teal);background:rgba(42,157,143,0.08);">
+        <div style="font-size:0.79rem;color:var(--teal-light);font-weight:700;">Empathetic acknowledgement</div>
+        <div style="font-size:0.75rem;color:var(--muted);">"I hear you. What you're describing is serious..."</div>
+      </div>
+      <div id="rs2" class="resp-line" style="border-left:3px solid var(--yellow);background:rgba(244,201,87,0.08);">
+        <div style="font-size:0.79rem;color:var(--yellow);font-weight:700;">What this looks like</div>
+        <div style="font-size:0.75rem;color:var(--muted);">Grounded summary from evidence [1][2]</div>
+      </div>
+      <div id="rs3" class="resp-line" style="border-left:3px solid var(--green);background:rgba(76,217,123,0.08);">
+        <div style="font-size:0.79rem;color:var(--green);font-weight:700;">Possible next steps</div>
+        <div style="font-size:0.75rem;color:var(--muted);">3–5 optional, evidence-backed steps [3][4]</div>
+      </div>
+      <div id="rs4" class="resp-line" style="border-left:3px solid var(--purple);background:rgba(200,160,255,0.08);">
+        <div style="font-size:0.79rem;color:var(--purple);font-weight:700;">Support resources</div>
+        <div style="font-size:0.75rem;color:var(--muted);">Organisations from the evidence</div>
+      </div>
+    </div>
   </div>
-  <h2 style="margin-bottom:22px;">Safety First — Urgent Help Surfaced</h2>
+</div>
 
+<!-- ═══ SCENE 8 — Crisis Banner ═══ -->
+<div class="scene" id="s8">
+  <span class="time-stamp">1:17 – 1:26</span>
+  <div class="agent-tag" style="border-color:var(--red);background:rgba(255,92,114,0.14);color:var(--red);">Risk = HIGH → UI Response</div>
+  <h2 style="margin-bottom:22px;">Safety First — Urgent Help Surfaced</h2>
   <div style="display:flex;gap:40px;align-items:flex-start;">
     <div class="phone">
       <div class="phone-hdr">🛡 SilenceBreaker</div>
@@ -671,14 +594,10 @@ h2 { font-size: 1.7rem; font-weight: 700; color: var(--teal-light); margin-botto
         <div style="display:flex;gap:10px;align-items:flex-start;">
           <span style="font-size:1.25rem;flex-shrink:0;">⚠️</span>
           <div>
-            <div style="font-size:0.84rem;font-weight:700;color:var(--red);margin-bottom:3px;">
-              You may be in immediate danger
-            </div>
+            <div style="font-size:0.84rem;font-weight:700;color:var(--red);margin-bottom:3px;">You may be in immediate danger</div>
             <div style="font-size:0.77rem;color:rgba(255,255,255,0.72);line-height:1.45;">
-              Call <span style="color:#ffcc00;font-weight:700;">999</span> now, or the
-              National Domestic Abuse Helpline:<br>
-              <span style="color:#ffcc00;font-weight:700;">0808 2000 247</span>
-              (free, 24/7)
+              Call <span style="color:#ffcc00;font-weight:700;">999</span> now, or the National Domestic Abuse Helpline:<br>
+              <span style="color:#ffcc00;font-weight:700;">0808 2000 247</span> (free, 24/7)
             </div>
           </div>
         </div>
@@ -688,33 +607,32 @@ h2 { font-size: 1.7rem; font-weight: 700; color: var(--teal-light); margin-botto
         <p>Based on your situation, here are some steps that may help you stay safe right now…</p>
       </div>
     </div>
-
-    <div style="max-width:300px;display:flex;flex-direction:column;gap:16px;">
-      <div id="fin0" style="opacity:0;transition:opacity 0.5s 0.5s;background:var(--card);
-           border:1px solid var(--border);border-radius:12px;padding:16px;">
-        <div style="font-size:0.78rem;color:var(--muted);margin-bottom:6px;">AI TECHNIQUE 1</div>
+    <div style="max-width:300px;display:flex;flex-direction:column;gap:14px;">
+      <div id="fin0" style="opacity:0;transition:opacity 0.5s 0.3s;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;">
+        <div style="font-size:0.73rem;color:var(--muted);margin-bottom:4px;">AI TECHNIQUE 1</div>
         <div style="font-weight:600;color:var(--teal-light);">Transformer Classification</div>
-        <div style="font-size:0.8rem;color:var(--muted);margin-top:4px;">Emotion &amp; abuse detection via pre-trained + fine-tuned models</div>
+        <div style="font-size:0.79rem;color:var(--muted);margin-top:3px;">Emotion + abuse via pre-trained & fine-tuned models</div>
       </div>
-      <div id="fin1" style="opacity:0;transition:opacity 0.5s 1s;background:var(--card);
-           border:1px solid var(--border);border-radius:12px;padding:16px;">
-        <div style="font-size:0.78rem;color:var(--muted);margin-bottom:6px;">AI TECHNIQUE 2</div>
-        <div style="font-weight:600;color:var(--yellow);">Few-Shot Learning</div>
-        <div style="font-size:0.8rem;color:var(--muted);margin-top:4px;">Category from 4 labelled examples — no full fine-tune needed</div>
+      <div id="fin1" style="opacity:0;transition:opacity 0.5s 0.8s;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;">
+        <div style="font-size:0.73rem;color:var(--muted);margin-bottom:4px;">AI TECHNIQUE 2</div>
+        <div style="font-weight:600;color:var(--blue-light);">Word Embeddings + RAG</div>
+        <div style="font-size:0.79rem;color:var(--muted);margin-top:3px;">MiniLM vectors + FAISS search over knowledge base</div>
       </div>
-      <div id="fin2" style="opacity:0;transition:opacity 0.5s 1.5s;background:var(--card);
-           border:1px solid var(--border);border-radius:12px;padding:16px;">
-        <div style="font-size:0.78rem;color:var(--muted);margin-bottom:6px;">AI TECHNIQUE 3</div>
+      <div id="fin2" style="opacity:0;transition:opacity 0.5s 1.3s;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;">
+        <div style="font-size:0.73rem;color:var(--muted);margin-bottom:4px;">AI TECHNIQUE 3</div>
+        <div style="font-weight:600;color:var(--yellow);">Few-Shot + Prompt Engineering</div>
+        <div style="font-size:0.79rem;color:var(--muted);margin-top:3px;">4 examples for category; structured system prompt</div>
+      </div>
+      <div id="fin3" style="opacity:0;transition:opacity 0.5s 1.8s;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;">
+        <div style="font-size:0.73rem;color:var(--muted);margin-bottom:4px;">AI TECHNIQUE 4</div>
         <div style="font-weight:600;color:var(--red);">Rule-Based Reasoning</div>
-        <div style="font-size:0.8rem;color:var(--muted);margin-top:4px;">Danger keyword regex always overrides classifier — safety guarantee</div>
+        <div style="font-size:0.79rem;color:var(--muted);margin-top:3px;">Danger regex always overrides classifier — safety guarantee</div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════
-     CONTROLS
-══════════════════════════════════════════ -->
+<!-- ═══ CONTROLS ═══ -->
 <div id="prog"></div>
 <div id="sub"><div id="sub-label">🎙 SPEECH</div><span id="sub-text">Loading…</span></div>
 <div id="controls">
@@ -726,39 +644,19 @@ h2 { font-size: 1.7rem; font-weight: 700; color: var(--teal-light); margin-botto
 
 <script>
 const SCENES = [
-  {
-    dur: 4000,
-    sub: "I built two agents in this pipeline — the Situation Listener and the Risk Evaluator."
-  },
-  {
-    dur: 6500,
-    sub: "The Listener is the first thing that runs. It takes the user's raw text and does three things."
-  },
-  {
-    dur: 12000,
-    sub: "First, it runs an emotion classifier — a pre-trained transformer — to detect the user's emotional state and map it to a distress level: low, medium, or high."
-  },
-  {
-    dur: 10000,
-    sub: "Second, it runs a fine-tuned DistilBERT model — trained by us — to detect whether the language is abusive. This gives a binary flag and a confidence score."
-  },
-  {
-    dur: 10000,
-    sub: "Third, it classifies the situation into one of four categories — domestic abuse, workplace harassment, coercive control, or non-abuse — using a few-shot prompt: just four labelled examples sent to the LLM."
-  },
-  {
-    dur: 13000,
-    sub: "The Risk Evaluator then takes that distress level and scans for danger language — words like 'weapon', 'kill', 'he's here right now' — using regex rules. If any match, the risk is raised to High, regardless of the classifier."
-  },
-  {
-    dur: 9000,
-    sub: "And when risk is High, the interface immediately surfaces an urgent-help message at the top of the response — safety first, before anything else. Together these cover transformer classification, few-shot learning, and rule-based reasoning — three of our five AI techniques."
-  },
+  { dur: 4000,  sub: "I built four agents in this pipeline — the Listener, Retriever, Risk Evaluator, and Safety Planner." },
+  { dur: 7000,  sub: "Here's the full pipeline. I'll walk through all four agents — each one builds on the last to produce a safe, grounded response." },
+  { dur: 12000, sub: "Agent 1, Step 1: it runs an emotion classifier — a pre-trained transformer — to detect the user's emotional state and map it to a distress level: low, medium, or high." },
+  { dur: 10000, sub: "Step 2: a fine-tuned DistilBERT model — trained by us — detects whether the language is abusive. This gives a binary flag and a confidence score." },
+  { dur: 10000, sub: "Step 3: the situation is classified into one of four categories using a few-shot prompt — just four labelled examples sent to the LLM." },
+  { dur: 11000, sub: "Agent 2 is the Retriever. It converts the query into a 384-dimensional vector using MiniLM, then searches our FAISS knowledge base by cosine similarity — returning the top-4 most relevant document chunks." },
+  { dur: 13000, sub: "Agent 4 is the Risk Evaluator. It takes the distress level and scans for danger language using regex rules. If any match, risk is raised to High — regardless of the classifier." },
+  { dur: 11000, sub: "Agent 3 is the Safety Planner. A carefully engineered system prompt instructs the LLM to be calm, ground every claim in the retrieved evidence, and — when risk is High — place the urgent help line first." },
+  { dur: 9000,  sub: "The result: a calm, cited, safety-checked response. Together, these agents cover transformer classification, RAG, few-shot learning, prompt engineering, and rule-based reasoning — five AI techniques." },
 ];
 
 let cur = 0, playing = true, timer = null, progInterval = null;
 
-// Build dots
 const dotsEl = document.getElementById('dots');
 SCENES.forEach((_, i) => {
   const d = document.createElement('div');
@@ -772,8 +670,7 @@ function updateDots() {
 }
 
 function goTo(idx) {
-  clearTimeout(timer);
-  clearInterval(progInterval);
+  clearTimeout(timer); clearInterval(progInterval);
   resetScene(cur);
   document.getElementById('s' + cur).classList.remove('active');
   cur = Math.max(0, Math.min(SCENES.length - 1, idx));
@@ -795,54 +692,53 @@ function togglePlay() {
 
 function schedNext() {
   clearInterval(progInterval);
-  const start = Date.now();
-  const dur = SCENES[cur].dur;
+  const start = Date.now(), dur = SCENES[cur].dur;
   const totalDur = SCENES.reduce((s, sc) => s + sc.dur, 0);
   const prior   = SCENES.slice(0, cur).reduce((s, sc) => s + sc.dur, 0);
-
   progInterval = setInterval(() => {
     const el = Date.now() - start;
-    const pct = Math.min(100, ((prior + el) / totalDur) * 100);
-    document.getElementById('prog').style.width = pct + '%';
+    document.getElementById('prog').style.width = Math.min(100, ((prior + el) / totalDur) * 100) + '%';
     if (el >= dur) clearInterval(progInterval);
   }, 60);
-
   timer = setTimeout(() => {
     if (cur < SCENES.length - 1) goTo(cur + 1);
     else playing = false;
   }, dur);
 }
 
-/* ── Scene reset helpers ── */
 function resetScene(idx) {
   if (idx === 2) {
     ['bf0','bf1','bf2','bf3'].forEach(id => document.getElementById(id).style.width = '0');
     document.getElementById('distress-badge').style.opacity = '0';
   }
-  if (idx === 3) {
-    document.getElementById('abuse-fill').style.width = '0';
-  }
+  if (idx === 3) { document.getElementById('abuse-fill').style.width = '0'; }
   if (idx === 4) {
     ['ex0','ex1','ex2','ex3'].forEach(id => document.getElementById(id).classList.remove('show'));
     ['cat0','cat1','cat2','cat3'].forEach(id => document.getElementById(id).classList.remove('chosen'));
     document.getElementById('cat-result').textContent = '';
   }
   if (idx === 5) {
-    ['tk0','tk1','tk2','tk3'].forEach(id => document.getElementById(id).style.opacity='0');
-    ['ll0','ll1','ll2','ll3'].forEach(id => document.getElementById(id).style.opacity='0');
+    ['rc0','rc1','rc2','rc3'].forEach(id => document.getElementById(id).style.opacity = '0');
+  }
+  if (idx === 6) {
+    ['tk0','tk1','tk2','tk3'].forEach(id => document.getElementById(id).style.opacity = '0');
+    ['ll0','ll1','ll2','ll3'].forEach(id => document.getElementById(id).style.opacity = '0');
     ['rs-low','rs-med','rs-high'].forEach(id => {
       const el = document.getElementById(id);
       el.classList.remove('rs-on-low','rs-on-med','rs-on-high');
     });
   }
-  if (idx === 6) {
+  if (idx === 7) {
+    ['pr0','pr1','pr2','pr3'].forEach(id => document.getElementById(id).style.opacity = '0');
+    ['rs0','rs1','rs2','rs3','rs4'].forEach(id => document.getElementById(id).style.opacity = '0');
+  }
+  if (idx === 8) {
     document.getElementById('phone-banner').style.opacity = '0';
     document.getElementById('phone-body').style.opacity  = '0';
-    ['fin0','fin1','fin2'].forEach(id => document.getElementById(id).style.opacity = '0');
+    ['fin0','fin1','fin2','fin3'].forEach(id => document.getElementById(id).style.opacity = '0');
   }
 }
 
-/* ── Scene enter animations ── */
 function enterScene(idx) {
   if (idx === 2) {
     setTimeout(() => {
@@ -852,56 +748,48 @@ function enterScene(idx) {
       setTimeout(() => { document.getElementById('distress-badge').style.opacity = '1'; }, 1300);
     }, 700);
   }
-
   if (idx === 3) {
-    setTimeout(() => {
-      document.getElementById('abuse-fill').style.width = '94%';
-    }, 800);
+    setTimeout(() => { document.getElementById('abuse-fill').style.width = '94%'; }, 800);
   }
-
   if (idx === 4) {
-    [0,1,2,3].forEach(i => {
-      setTimeout(() => document.getElementById('ex'+i).classList.add('show'), 350 + i*280);
-    });
+    [0,1,2,3].forEach(i => setTimeout(() => document.getElementById('ex'+i).classList.add('show'), 350 + i*280));
     setTimeout(() => {
       document.getElementById('cat0').classList.add('chosen');
       document.getElementById('cat-result').textContent = 'Domestic Abuse';
     }, 2600);
   }
-
   if (idx === 5) {
-    // Show keyword tags
-    ['tk0','tk1','tk2','tk3'].forEach((id, i) => {
-      setTimeout(() => document.getElementById(id).style.opacity='1', 500 + i*320);
+    ['rc0','rc1','rc2','rc3'].forEach((id, i) => {
+      setTimeout(() => { document.getElementById(id).style.opacity = '1'; }, 700 + i * 500);
     });
-    // Logic lines
-    [['ll0',1800],['ll1',2700],['ll2',3500],['ll3',4400]].forEach(([id,t]) => {
-      setTimeout(() => document.getElementById(id).style.opacity='1', t);
-    });
-    // Risk meter animation: LOW → MED → HIGH
-    setTimeout(() => document.getElementById('rs-low').classList.add('rs-on-low'), 1000);
-    setTimeout(() => {
-      document.getElementById('rs-low').classList.remove('rs-on-low');
-      document.getElementById('rs-med').classList.add('rs-on-med');
-    }, 2200);
-    setTimeout(() => {
-      document.getElementById('rs-med').classList.remove('rs-on-med');
-      document.getElementById('rs-high').classList.add('rs-on-high');
-    }, 3600);
   }
-
   if (idx === 6) {
+    ['tk0','tk1','tk2','tk3'].forEach((id, i) => {
+      setTimeout(() => document.getElementById(id).style.opacity = '1', 500 + i*320);
+    });
+    [['ll0',1800],['ll1',2700],['ll2',3500],['ll3',4400]].forEach(([id,t]) => {
+      setTimeout(() => document.getElementById(id).style.opacity = '1', t);
+    });
+    setTimeout(() => document.getElementById('rs-low').classList.add('rs-on-low'), 1000);
+    setTimeout(() => { document.getElementById('rs-low').classList.remove('rs-on-low'); document.getElementById('rs-med').classList.add('rs-on-med'); }, 2200);
+    setTimeout(() => { document.getElementById('rs-med').classList.remove('rs-on-med'); document.getElementById('rs-high').classList.add('rs-on-high'); }, 3600);
+  }
+  if (idx === 7) {
+    ['pr0','pr1','pr2','pr3'].forEach((id, i) => {
+      setTimeout(() => document.getElementById(id).style.opacity = '1', 500 + i * 600);
+    });
+    ['rs0','rs1','rs2','rs3','rs4'].forEach((id, i) => {
+      setTimeout(() => document.getElementById(id).style.opacity = '1', 2800 + i * 500);
+    });
+  }
+  if (idx === 8) {
     setTimeout(() => { document.getElementById('phone-banner').style.opacity = '1'; }, 400);
     setTimeout(() => { document.getElementById('phone-body').style.opacity  = '1'; }, 1200);
-    // Technique cards use CSS transition-delay already, just set opacity
-    setTimeout(() => {
-      ['fin0','fin1','fin2'].forEach(id => document.getElementById(id).style.opacity = '1');
-    }, 200);
+    setTimeout(() => { ['fin0','fin1','fin2','fin3'].forEach(id => document.getElementById(id).style.opacity = '1'); }, 200);
   }
 }
 
-// Kick off
-document.getElementById('sub').textContent = SCENES[0].sub;
+document.getElementById('sub-text').textContent = SCENES[0].sub;
 enterScene(0);
 schedNext();
 </script>

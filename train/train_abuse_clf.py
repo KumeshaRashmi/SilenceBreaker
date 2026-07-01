@@ -13,7 +13,6 @@ from datasets import load_dataset
 from transformers import (AutoTokenizer, AutoModelForSequenceClassification,
                           TrainingArguments, Trainer, DataCollatorWithPadding)
 from sklearn.metrics import accuracy_score, precision_recall_fscore_support
-from sklearn.utils.class_weight import compute_class_weight
 
 MODEL = "distilbert-base-uncased"
 OUT = "models/abuse_clf"
@@ -38,11 +37,12 @@ class WeightedTrainer(Trainer):
 def main():
     ds = load_dataset("cardiffnlp/tweet_eval", "hate")
 
-    # Compute class weights from training labels
-    train_labels = np.array(ds["train"]["label"])
-    classes = np.unique(train_labels)
-    weights = compute_class_weight("balanced", classes=classes, y=train_labels)
-    print(f"Class weights: {dict(zip(classes.tolist(), weights.tolist()))}")
+    # Fixed class weights: 1.0 for non-abuse, 2.0 for abuse.
+    # "balanced" was too aggressive and caused near-universal abuse prediction
+    # (recall=0.978, precision=0.468 at threshold 0.5). Fixed 1:2 ratio gives
+    # a better precision-recall balance while still accounting for class skew.
+    weights = [1.0, 2.0]
+    print(f"Class weights: {weights}")
 
     tok = AutoTokenizer.from_pretrained(MODEL)
 
@@ -73,7 +73,7 @@ def main():
         train_dataset=ds["train"], eval_dataset=ds["test"],
         processing_class=tok, data_collator=DataCollatorWithPadding(tok),
         compute_metrics=metrics,
-        class_weights=weights.tolist())
+        class_weights=weights)
 
     trainer.train()
     print(trainer.evaluate())
