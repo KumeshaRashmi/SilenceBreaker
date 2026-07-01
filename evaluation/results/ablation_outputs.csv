@@ -1,12 +1,20 @@
 scenario,input,expected_category,expected_risk,A_baseline,B_rag,C_response,C_category,C_risk
-1,My partner won't let me leave the house or see my friends anymore.,coercive_control,medium,"I'm so sorry to hear that you're going through this. It sounds like you might be experiencing a controlling or isolating situation, which can be very ","Based on the evidence provided, it appears that your partner is exhibiting controlling behavior, which is a form of psychological and emotional abuse.","I'm so sorry to hear that you're going through this. It sounds like you're experiencing a very difficult and isolating situation.
-
-**What this looks l",coercive_control,high
-2,My manager keeps sending inappropriate messages and threatens my job if I report,workplace_harassment,medium,"I'm so sorry to hear that you're going through this. It's completely unacceptable for your manager to be sending you inappropriate messages, and it's ","Based on the provided evidence, it appears that your manager's behavior is a form of workplace harassment, and you have the right to report it without",I'm so sorry to hear that you're experiencing this situation. It's completely unacceptable that your manager is sending you inappropriate messages and,workplace_harassment,high
-3,He shoved me again last night and I'm scared to go home tonight.,domestic_abuse,high,I'm so sorry to hear that you're going through this. It sounds like you're in a very difficult and potentially dangerous situation. I want you to know,"Based on the evidence provided, it appears that you are in a situation of physical abuse. Your partner has shoved you again, and you're scared to go h","""I'm so sorry to hear that you're going through this. It takes a lot of courage to acknowledge the situation, and I'm here to support you.""
-
-**What th",domestic_abuse,high
-4,HR ignored my complaint and now I'm getting fewer shifts than everyone else.,workplace_harassment,low,I'm so sorry to hear that you're going through this. It's unacceptable that HR ignored your complaint and now you're facing retaliation in the form of,"Based on the evidence provided, it appears that you are experiencing retaliation from your employer after reporting a complaint to HR. The evidence st",I'm so sorry to hear that you're experiencing this situation at work. It's completely unacceptable that HR ignored your complaint and now you're facin,workplace_harassment,low
-5,My husband controls all the money and checks my phone every day.,coercive_control,medium,It sounds like you're feeling a bit trapped and controlled in your relationship. Having someone constantly monitor your phone can be very invasive and,"Based on the evidence provided, it appears that your husband is engaging in coercive control, specifically financial control and digital monitoring. T","I'm so sorry to hear that you're going through this. It takes a lot of courage to acknowledge the situation, and I'm here to support you.
+1,My partner won't let me leave the house or see my friends anymore.,coercive_control,medium,"I'm so sorry to hear that you're going through this. It sounds like you might be experiencing some form of emotional or psychological control, which c","Based on the provided evidence, it appears that your partner's behavior is a form of psychological and emotional abuse, specifically isolation and con","I'm so sorry to hear that you're going through this. It takes a lot of courage to acknowledge the situation, and I'm here to support you.
 
 **What this",coercive_control,high
+2,My manager keeps sending inappropriate messages and threatens my job if I report,workplace_harassment,medium,"I'm so sorry to hear that you're going through this. It's completely unacceptable for your manager to be sending you inappropriate messages, and it's ","Based on the provided evidence, here are the steps you can take to address the situation:
+
+1. **Keep a private record of incidents**: Document the dat","I'm so sorry to hear that you're experiencing this at work. It's completely unacceptable and not your fault.
+
+**What this looks like:** Your manager i",workplace_harassment,high
+3,He shoved me again last night and I'm scared to go home tonight.,domestic_abuse,high,I'm so sorry to hear that you're going through this. It's completely understandable that you're scared to go home tonight. Physical and emotional abus,"Based on the evidence provided, it appears that you are in a situation of physical abuse. You mentioned that your partner shoved you again last night ","I'm so sorry to hear that you're going through this. It takes a lot of courage to reach out and talk about what's happening.
+
+**What this looks like:*",domestic_abuse,high
+4,HR ignored my complaint and now I'm getting fewer shifts than everyone else.,workplace_harassment,low,"I'm so sorry to hear that you're going through this. It's unacceptable for HR to ignore your complaint, and it's even more concerning that you're expe","Based on the provided evidence, it appears that your employer has retaliated against you for filing a complaint by reducing your shifts. This is a com","I'm so sorry to hear that you're experiencing this situation at work. It sounds incredibly frustrating and unfair.
+
+**What this looks like:** It appea",workplace_harassment,low
+5,My husband controls all the money and checks my phone every day.,coercive_control,medium,It sounds like you're going through a challenging situation in your relationship. Having someone control your finances and monitor your phone activity,"Based on the evidence provided, it appears that your husband is engaging in controlling behavior, which is a form of abuse. Specifically, he is:
+
+* Co","I'm so sorry to hear that you're experiencing this. It sounds like you're in a very difficult and controlling situation.
+
+**What this looks like:** Ba",coercive_control,high

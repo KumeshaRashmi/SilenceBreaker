@@ -1,0 +1,26 @@
+Scenario,Input,Expected Category,Predicted Category,Category Match,Expected Risk,Predicted Risk,Risk Match
+1,My partner won't let me leave the house or see my ,coercive_control,coercive_control,✓,medium,high,✗
+2,My manager keeps sending inappropriate messages an,workplace_harassment,workplace_harassment,✓,medium,high,✗
+3,He shoved me again last night and I'm scared to go,domestic_abuse,domestic_abuse,✓,high,high,✓
+4,HR ignored my complaint and now I'm getting fewer ,workplace_harassment,workplace_harassment,✓,low,low,✓
+5,My husband controls all the money and checks my ph,coercive_control,coercive_control,✓,medium,high,✗
+6,I'm just stressed about moving to a new apartment ,non_abuse,non_abuse,✓,low,medium,✗
+7,A coworker keeps making comments about my body and,workplace_harassment,workplace_harassment,✓,low,medium,✗
+8,She threatened to hurt me if I tell anyone what ha,domestic_abuse,domestic_abuse,✓,high,high,✓
+9,My boyfriend tracks my location and gets angry if ,coercive_control,coercive_control,✓,medium,high,✗
+10,I had an argument with a friend about politics and,non_abuse,non_abuse,✓,low,medium,✗
+11,"I'm afraid he's going to do something tonight, he ",domestic_abuse,domestic_abuse,✓,high,high,✓
+12,My supervisor blocks my promotions because I rejec,workplace_harassment,workplace_harassment,✓,low,high,✗
+13,"I feel trapped and isolated, he decides everything",coercive_control,coercive_control,✓,medium,medium,✓
+14,I'm nervous about my driving test this week.,non_abuse,non_abuse,✓,low,high,✗
+15,"My partner hit me and I can't breathe properly, I ",domestic_abuse,domestic_abuse,✓,high,high,✓
+16,"My ex used to scream at concerts, he's so intense ",non_abuse,non_abuse,✓,low,high,✗
+17,My manager gave me critical feedback in front of t,non_abuse,workplace_harassment,✗,low,medium,✗
+18,"Things have been tense at home lately, he gets rea",coercive_control,coercive_control,✓,medium,high,✗
+19,What would you tell someone whose partner reads th,coercive_control,coercive_control,✓,medium,medium,✓
+20,"Oh he's so caring, checks my phone every hour just",coercive_control,coercive_control,✓,medium,low,✗
+21,"I'm nervous about my performance review next week,",non_abuse,workplace_harassment,✗,low,high,✗
+22,He apologized after yelling at me but says I made ,domestic_abuse,coercive_control,✗,high,low,✗
+23,My coworker borrowed my charger and forgot to give,non_abuse,non_abuse,✓,low,high,✗
+24,She tracks my location constantly and gets angry i,coercive_control,coercive_control,✓,high,high,✓
+25,I disagreed with my boss in a meeting and he seeme,non_abuse,non_abuse,✓,low,high,✗
