@@ -1,5 +1,5 @@
 Metric,Score
-Hit@3,0.08
-Hit@4,0.08
-Precision@3,0.04
-Precision@4,0.03
+Hit@3,0.9
+Hit@4,0.9
+Precision@3,0.3
+Precision@4,0.25
