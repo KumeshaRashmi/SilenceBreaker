@@ -10,17 +10,16 @@ from sklearn.metrics import classification_report, confusion_matrix
 
 def main(n=2000):
     clf = pipeline("text-classification", model="models/abuse_clf")
-    ds = load_dataset("google/jigsaw_toxicity_pred", trust_remote_code=True)["test"]
+    ds = load_dataset("cardiffnlp/tweet_eval", "hate")["test"]
     ds = ds.shuffle(seed=0).select(range(min(n, len(ds))))
 
     def gold(ex):
-        return int(any([ex["toxic"], ex["threat"],
-                        ex["insult"], ex["identity_hate"]]))
+        return int(ex["label"] == 1)
 
     y_true, y_pred = [], []
     for ex in ds:
         y_true.append(gold(ex))
-        label = clf(ex["comment_text"][:512])[0]["label"]
+        label = clf(ex["text"][:512])[0]["label"]
         y_pred.append(1 if label.lower().endswith("1") else 0)
 
     print(classification_report(y_true, y_pred, digits=3,

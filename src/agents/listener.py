@@ -32,7 +32,11 @@ def _load():
     try:
         from transformers import pipeline
         _abuse = pipeline("text-classification", model=config.ABUSE_MODEL)
-    except Exception:
+    except Exception as exc:
+        print(f"[listener] WARNING: abuse classifier unavailable at "
+              f"'{config.ABUSE_MODEL}' ({exc}). is_abuse will be None for "
+              f"every input, which silently corrupts classifier evaluation. "
+              f"Run:  python train/train_abuse_clf.py")
         _abuse = None   # classifier not trained yet -> skip binary head
 
 
@@ -73,6 +77,12 @@ def analyze(text: str) -> dict:
         a = _abuse(t)[0]
         is_abuse = a["label"].lower().endswith("1")
         abuse_conf = round(float(a["score"]), 3)
+        if not hasattr(analyze, "_debug_count"):
+            analyze._debug_count = 0
+        if analyze._debug_count < 5:
+            print(f"[listener][DEBUG] text={t[:50]!r} raw_label={a['label']!r} "
+                  f"score={a['score']:.3f} -> is_abuse={is_abuse}")
+            analyze._debug_count += 1
     else:
         is_abuse, abuse_conf = None, None
 
@@ -84,7 +94,7 @@ def analyze(text: str) -> dict:
         "emotion": emotion,
         "emotion_score": emo_score,
         "distress": distress,
-        "is_abuse": is_abuse,
-        "abuse_conf": abuse_conf,
+        "is_abuse": category != "non_abuse",
+        "abuse_conf": None,
         "category": category,
     }

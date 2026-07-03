@@ -27,10 +27,10 @@ EMOTION_MODEL = "j-hartmann/emotion-english-distilroberta-base"
 # ----------------------------------------------------------------------------
 # LLM (OpenAI-compatible endpoint: Groq / OpenAI / Together / local server)
 # ----------------------------------------------------------------------------
-LLM_BASE_URL = os.getenv("LLM_BASE_URL", "https://api.groq.com/openai/v1")
-LLM_MODEL    = os.getenv("LLM_MODEL", "llama-3.1-8b-instant")
+LLM_BASE_URL = os.getenv("LLM_BASE_URL", "https://generativelanguage.googleapis.com/v1beta/openai/")
+LLM_MODEL    = os.getenv("LLM_MODEL", "gemini-3.5-flash")
 LLM_API_KEY  = (os.getenv("GROQ_API_KEY") or os.getenv("OPENAI_API_KEY")
-                or os.getenv("TOGETHER_API_KEY"))
+                or os.getenv("TOGETHER_API_KEY") or os.getenv("GEMINI_API_KEY"))
 
 # When no API key is configured the system runs in OFFLINE mode: it uses
 # rule-based category classification and a template-based planner so the whole
