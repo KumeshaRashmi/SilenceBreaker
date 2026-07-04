@@ -1,8 +1,8 @@
-# SilenceBreaker 🛡️
+# SilenceBreaker
 
 **A Multi-Agent, Risk-Aware, RAG-Based Support Assistant for Abuse-Related Help-Seeking**
 
-Advanced AI – Group Project 2026. SilenceBreaker is a **prototype** that identifies
+Advanced AI – Group Project. SilenceBreaker is a **prototype** that identifies
 abuse-related concerns from text, retrieves verified support information, and
 generates **evidence-grounded** guidance with **risk-escalation flags**.
 
@@ -15,7 +15,7 @@ generates **evidence-grounded** guidance with **risk-escalation flags**.
 | EG/2021/4748 | Rashmi E.D.K. |
 | EG/2021/4775 | Samarasinghe C.Y. |
 
-> ⚠️ **Scope & ethics.** This is a prototype information/triage tool. It does **not**
+> **Scope & ethics.** This is a prototype information/triage tool. It does **not**
 > provide legal, medical, or professional advice, does **not** diagnose, and routes
 > high-risk cases to *seek immediate local help*. It is not a substitute for
 > professional or emergency services.
@@ -130,10 +130,10 @@ aid) for the UK, US, Canada, Australia, and Sri Lanka, sourced from official
 organisations and cited at the bottom of each document. Do not invent contact
 details or statistics if you extend this knowledge base.
 
+## Demonstratable Output of Website
+<img width="1807" height="816" alt="11111" src="https://github.com/user-attachments/assets/679b8d2e-019d-40ac-afc7-48f4b0725d19" />
+<img width="1762" height="777" alt="2222" src="https://github.com/user-attachments/assets/324378c2-8005-44a9-9591-e3502ebd748f" />
+<img width="1786" height="837" alt="3333" src="https://github.com/user-attachments/assets/d84aed94-cd4a-4e65-8e6e-48ad2f86173f" />
+
+
 ---
-
-## Disclaimer
-
-SilenceBreaker is an academic prototype. It is not affiliated with any support
-organisation and must not be relied on in an emergency. Always contact local
-emergency services or a qualified professional for real situations.
