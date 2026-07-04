@@ -3,6 +3,5 @@ __pycache__/
 *.pyc
 .env
 data/processed/
-models/
 evaluation/ablation_outputs.csv
 .ipynb_checkpoints/
